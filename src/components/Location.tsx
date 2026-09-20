@@ -5,8 +5,7 @@ import { MapPin, Clock, Phone, ExternalLink, Navigation, CheckCircle2 } from 'lu
 import { WA_NUMBERS, getWhatsAppLink } from '@/utils/whatsapp';
 
 export default function Location() {
-  const gmapsUrl =
-    'https://www.google.com/maps/search/?api=1&query=Vila+Mutiara+Cikarang+2+Blok+B2+no+30+Sukasejati+Cikarang+Selatan+Bekasi';
+  const gmapsUrl = 'https://maps.app.goo.gl/C1fQHCzHXogC3FZp8?g_st=ac';
 
   return (
     <section id="lokasi" className="py-16 lg:py-24 bg-[#F7F3ED] relative">
