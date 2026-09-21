@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Star, ShoppingBag, ChevronRight, Award, ShieldCheck, Package } from 'lucide-react';
+import { Star, ShoppingBag, ChevronRight, ShieldCheck } from 'lucide-react';
 import { getWhatsAppLink } from '@/utils/whatsapp';
 
 interface HeroProps {
@@ -26,13 +26,13 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
     >
       {/* Background decorative blobs */}
       <div className="absolute top-1/4 right-[5%] w-96 h-96 bg-[#C8A96E]/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-20 left-[5%] w-72 h-72 bg-[#1A6B4F]/8 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-20 left-[5%] w-72 h-72 bg-[#1E673C]/8 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-20 left-[20%] w-48 h-48 bg-[#C8A96E]/10 rounded-full blur-2xl pointer-events-none" />
 
       {/* Dot pattern subtle */}
       <div
         className="absolute inset-0 opacity-[0.025] pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(#0B3D2E 1px, transparent 1px)', backgroundSize: '28px 28px' }}
+        style={{ backgroundImage: 'radial-gradient(#0B3D20 1px, transparent 1px)', backgroundSize: '28px 28px' }}
       />
 
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -46,7 +46,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
             className="relative order-2 lg:order-1 flex items-center justify-center"
           >
             {/* Outer glow */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#C8A96E]/15 via-transparent to-[#1A6B4F]/10 rounded-[40px] blur-2xl" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#C8A96E]/15 via-transparent to-[#1E673C]/10 rounded-[40px] blur-2xl" />
 
             {/* ── Collage Grid ── */}
             <div className="relative w-full max-w-md lg:max-w-none">
@@ -57,7 +57,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
                 className="relative w-full aspect-[4/3] rounded-[28px] overflow-hidden shadow-2xl border-4 border-white"
-                style={{ filter: 'drop-shadow(0 20px 48px rgba(11,61,46,0.16))' }}
+                style={{ filter: 'drop-shadow(0 20px 48px rgba(11,61,32,0.16))' }}
               >
                 <Image
                   src="/images/lumpia-special.jpg"
@@ -68,11 +68,11 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                   className="object-cover"
                 />
                 {/* Subtle gradient overlay at bottom */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D2E]/20 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D20]/20 via-transparent to-transparent" />
 
                 {/* Label overlay */}
                 <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-2xl px-4 py-2.5 shadow-md">
-                  <p className="font-['Great_Vibes',cursive] text-[#1A6B4F] text-xl leading-none">Lumpia Special</p>
+                  <p className="font-['Great_Vibes',cursive] text-[#1E673C] text-xl leading-none">Lumpia Special</p>
                   <p className="font-sans text-[10px] text-[#4A4A4A] mt-0.5">Homemade · Fresh Daily</p>
                 </div>
               </motion.div>
@@ -93,7 +93,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                     sizes="200px"
                     className="object-cover hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D2E]/40 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D20]/40 via-transparent to-transparent" />
                   <span className="absolute bottom-2 left-2.5 text-white text-[10px] font-bold font-sans drop-shadow">Risoles Mayo</span>
                 </motion.div>
 
@@ -111,7 +111,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                     sizes="200px"
                     className="object-cover hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D2E]/40 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D20]/40 via-transparent to-transparent" />
                   <span className="absolute bottom-2 left-2.5 text-white text-[10px] font-bold font-sans drop-shadow">Pie Buah</span>
                 </motion.div>
               </div>
@@ -121,7 +121,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
                 onClick={onOpenSnackBoxBuilder}
-                className="cursor-pointer absolute -top-4 -right-3 sm:-right-5 bg-[#0B3D2E] rounded-2xl px-3.5 py-3 shadow-2xl border-2 border-[#C8A96E]/50 flex items-center gap-2.5 z-20 hover:scale-105 transition-transform"
+                className="cursor-pointer absolute -top-4 -right-3 sm:-right-5 bg-[#0B3D20] rounded-2xl px-3.5 py-3 shadow-2xl border-2 border-[#C8A96E]/50 flex items-center gap-2.5 z-20 hover:scale-105 transition-transform"
               >
                 <div className="w-9 h-9 rounded-xl bg-[#C8A96E]/20 border border-[#C8A96E]/50 flex items-center justify-center text-lg">
                   🍱
@@ -138,11 +138,11 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                 className="absolute -bottom-2 -left-3 sm:-left-5 bg-white rounded-2xl px-3.5 py-2.5 shadow-xl border border-[#E8E4DC] flex items-center gap-2.5 z-20"
               >
-                <div className="w-9 h-9 rounded-xl bg-[#0B3D2E] text-[#C8A96E] flex items-center justify-center">
+                <div className="w-9 h-9 rounded-xl bg-[#0B3D20] text-[#C8A96E] flex items-center justify-center">
                   <ShieldCheck className="w-4.5 h-4.5" style={{ width: '18px', height: '18px' }} />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-[#0B3D2E] leading-none">Bahan Alami 100%</p>
+                  <p className="text-xs font-bold text-[#0B3D20] leading-none">Bahan Alami 100%</p>
                   <p className="text-[10px] text-[#8A8A7A] mt-0.5 leading-none">Tanpa Pengawet Buatan</p>
                 </div>
               </motion.div>
@@ -161,7 +161,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
             <motion.span
               variants={fadeUp}
               transition={{ duration: 0.6 }}
-              className="font-['Great_Vibes',cursive] text-[#1A6B4F] text-4xl sm:text-5xl block mb-1"
+              className="font-['Great_Vibes',cursive] text-[#1E673C] text-4xl sm:text-5xl block mb-1"
             >
               Paket Spesial
             </motion.span>
@@ -172,11 +172,11 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
               transition={{ duration: 0.6, delay: 0.05 }}
               className="relative inline-block mb-4"
             >
-              <h1 className="font-['Playfair_Display',serif] text-6xl sm:text-7xl lg:text-8xl font-black text-[#0B3D2E] leading-none tracking-tight">
+              <h1 className="font-['Playfair_Display',serif] text-6xl sm:text-7xl lg:text-8xl font-black text-[#0B3D20] leading-none tracking-tight">
                 Snack Box
               </h1>
               {/* Circular price badge */}
-              <div className="absolute -top-6 -right-6 sm:-right-10 w-[72px] h-[72px] bg-[#0B3D2E] rounded-full flex flex-col items-center justify-center text-white shadow-xl z-10 border-4 border-[#F8F4EE]">
+              <div className="absolute -top-6 -right-6 sm:-right-10 w-[72px] h-[72px] bg-[#0B3D20] rounded-full flex flex-col items-center justify-center text-white shadow-xl z-10 border-4 border-[#F8F4EE]">
                 <span className="text-[7px] uppercase tracking-widest opacity-70 font-sans leading-none">MULAI</span>
                 <span className="text-lg font-black leading-none font-['Playfair_Display',serif]">10rb</span>
                 <span className="text-[8px] opacity-50 line-through leading-none font-sans">15rb</span>
@@ -192,7 +192,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
               {[1, 2, 3, 4, 5].map((i) => (
                 <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
               ))}
-              <span className="font-bold text-[#0B3D2E] text-sm ml-1">4.9</span>
+              <span className="font-bold text-[#0B3D20] text-sm ml-1">4.9</span>
               <span className="text-[#8A8A7A] text-xs">500+ Ulasan</span>
             </motion.div>
 
@@ -204,7 +204,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
             >
               <p className="text-[#4A4A4A] text-sm leading-relaxed font-sans">
                 Kue basah tradisional dan modern berkualitas untuk setiap momen istimewa Anda. Dibuat{' '}
-                <strong className="text-[#0B3D2E]">fresh setiap hari</strong> dengan bahan alami pilihan — tanpa pengawet. Melayani kantor di kawasan industri Cikarang, arisan, syukuran, dan hampers.
+                <strong className="text-[#0B3D20]">fresh setiap hari</strong> dengan bahan alami pilihan — tanpa pengawet. Melayani kantor di kawasan industri Cikarang, arisan, syukuran, dan hampers.
               </p>
             </motion.div>
 
@@ -220,7 +220,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                 { icon: '🚗', text: 'Kirim Cikarang' },
                 { icon: '🎁', text: 'Custom Hampers' },
               ].map(({ icon, text }) => (
-                <span key={text} className="inline-flex items-center gap-1.5 bg-[#0B3D2E]/6 text-[#0B3D2E] text-xs font-medium px-3 py-1.5 rounded-full font-sans border border-[#0B3D2E]/10">
+                <span key={text} className="inline-flex items-center gap-1.5 bg-[#0B3D20]/6 text-[#0B3D20] text-xs font-medium px-3 py-1.5 rounded-full font-sans border border-[#0B3D20]/10">
                   <span>{icon}</span>
                   {text}
                 </span>
@@ -237,14 +237,14 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                 href={waLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-[#C8A96E] hover:bg-[#0B3D2E] text-[#0B3D2E] hover:text-white px-8 py-3.5 rounded-full font-bold text-sm font-sans transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95"
+                className="inline-flex items-center justify-center gap-2 bg-[#C8A96E] hover:bg-[#0B3D20] text-[#0B3D20] hover:text-white px-8 py-3.5 rounded-full font-bold text-sm font-sans transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95"
               >
                 <ShoppingBag className="w-4 h-4" />
                 PESAN SEKARANG
               </a>
               <a
                 href="#produk"
-                className="inline-flex items-center justify-center gap-2 border-2 border-[#C8A96E] text-[#0B3D2E] hover:bg-[#C8A96E] px-8 py-3.5 rounded-full font-bold text-sm font-sans transition-all duration-300 active:scale-95"
+                className="inline-flex items-center justify-center gap-2 border-2 border-[#C8A96E] text-[#0B3D20] hover:bg-[#C8A96E] px-8 py-3.5 rounded-full font-bold text-sm font-sans transition-all duration-300 active:scale-95"
               >
                 LIHAT MENU
                 <ChevronRight className="w-4 h-4" />

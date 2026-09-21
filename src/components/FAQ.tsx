@@ -23,10 +23,10 @@ export default function FAQ() {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="font-['Great_Vibes',cursive] text-[#1A6B4F] text-2xl lg:text-3xl block mb-2">
+          <span className="font-['Great_Vibes',cursive] text-[#1E673C] text-2xl lg:text-3xl block mb-2">
             ✦ FAQ ✦
           </span>
-          <h2 className="font-['Playfair_Display',serif] text-[#0B3D2E] text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
+          <h2 className="font-['Playfair_Display',serif] text-[#0B3D20] text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
             Pertanyaan yang Sering Ditanyakan
           </h2>
           <p className="text-[#4A4A4A] text-sm sm:text-base mt-2">
@@ -49,13 +49,13 @@ export default function FAQ() {
                   className="w-full flex items-center justify-between p-4 sm:p-5 text-left focus:outline-none"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#0B3D2E] pr-4 leading-snug">
+                  <span className="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#0B3D20] pr-4 leading-snug">
                     {faq.question}
                   </span>
                   <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.25 }}
-                    className="w-8 h-8 rounded-full bg-[#114D3A]/10 text-[#0B3D2E] flex items-center justify-center shrink-0"
+                    className="w-8 h-8 rounded-full bg-[#134E2C]/10 text-[#0B3D20] flex items-center justify-center shrink-0"
                   >
                     <ChevronDown className="w-4 h-4" />
                   </motion.div>
@@ -81,7 +81,7 @@ export default function FAQ() {
         </div>
 
         {/* FAQ CTA Box */}
-        <div className="max-w-3xl mx-auto mt-12 bg-gradient-to-br from-[#0B3D2E] to-[#114D3A] rounded-3xl p-6 sm:p-10 text-center text-white shadow-2xl border border-[#C8A96E]/30 relative overflow-hidden">
+        <div className="max-w-3xl mx-auto mt-12 bg-gradient-to-br from-[#0B3D20] to-[#134E2C] rounded-3xl p-6 sm:p-10 text-center text-white shadow-2xl border border-[#C8A96E]/30 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#C8A96E]/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="w-12 h-12 rounded-2xl bg-[#C8A96E]/20 border border-[#C8A96E]/40 text-[#C8A96E] flex items-center justify-center mx-auto mb-4">
@@ -99,7 +99,7 @@ export default function FAQ() {
             href={defaultWaAsk}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-[#C8A96E] hover:bg-[#F5E6C8] text-[#0B3D2E] font-bold text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-lg transition-all active:scale-95"
+            className="inline-flex items-center justify-center gap-2 bg-[#C8A96E] hover:bg-[#F5E6C8] text-[#0B3D20] font-bold text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-lg transition-all active:scale-95"
           >
             <MessageCircle className="w-4 h-4 fill-current" />
             <span>Chat Langsung via WhatsApp</span>

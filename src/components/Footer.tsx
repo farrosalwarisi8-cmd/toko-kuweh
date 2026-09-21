@@ -16,14 +16,6 @@ function InstagramIcon({ className = 'w-5 h-5' }: { className?: string }) {
   );
 }
 
-function FacebookIcon({ className = 'w-5 h-5' }: { className?: string }) {
-  return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C18.05 21.45 22 17.18 22 12z" />
-    </svg>
-  );
-}
-
 function WhatsAppIcon({ className = 'w-5 h-5' }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -42,16 +34,15 @@ const NAV_LINKS = [
 ];
 
 const POPULAR_ITEMS = [
-  { name: 'Lemper Ayam Spesial', price: 'Rp 3.500' },
-  { name: 'Risol Mayo Creamy', price: 'Rp 4.000' },
-  { name: 'Lumpia Special', price: 'Rp 3.500' },
-  { name: 'Kue Sus Vla Vanila', price: 'Rp 4.000' },
-  { name: 'Snack Box Hemat', price: 'Mulai 10rb' },
+  { name: 'Lemper Ayam Spesial', price: '' },
+  { name: 'Risol Mayo Creamy', price: '' },
+  { name: 'Lumpia Special', price: '' },
+  { name: 'Kue Sus Vla Vanila', price: '' },
+  { name: 'Snack Box Hemat', price: '' },
 ];
 
 const SOCIAL_LINKS = [
-  { icon: FacebookIcon, href: 'https://facebook.com', label: 'Facebook' },
-  { icon: InstagramIcon, href: 'https://instagram.com', label: 'Instagram' },
+  { icon: InstagramIcon, href: 'https://www.instagram.com/tokokuweh__', label: 'Instagram' },
   { icon: WhatsAppIcon, href: getWhatsAppLink('Halo Toko Kuweh!'), label: 'WhatsApp' },
 ];
 
@@ -73,11 +64,11 @@ export default function Footer() {
           {/* Col 1: Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-14 h-14 rounded-2xl bg-[#0B3D2E] p-1.5 shadow-md overflow-hidden flex items-center justify-center">
+              <div className="w-14 h-14 rounded-2xl bg-[#0B3D20] p-1.5 shadow-md overflow-hidden flex items-center justify-center">
                 <Image src="/images/logo.jpg" alt="Logo Toko Kuweh" width={52} height={52} className="w-full h-full object-contain" />
               </div>
               <div>
-                <span className="font-['Playfair_Display',serif] text-xl font-bold text-[#0B3D2E] block leading-none">Toko Kuweh</span>
+                <span className="font-['Playfair_Display',serif] text-xl font-bold text-[#0B3D20] block leading-none">Toko Kuweh</span>
                 <span className="text-[9px] tracking-widest uppercase text-[#8A8A7A] font-sans block mt-1">Taste of Cikarang</span>
               </div>
             </div>
@@ -99,7 +90,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${label} Toko Kuweh`}
-                  className="w-9 h-9 rounded-full bg-[#0B3D2E]/8 hover:bg-[#0B3D2E] text-[#0B3D2E] hover:text-white flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-full bg-[#0B3D20]/8 hover:bg-[#0B3D20] text-[#0B3D20] hover:text-white flex items-center justify-center transition-all"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -109,13 +100,13 @@ export default function Footer() {
 
           {/* Col 2: Navigation */}
           <div>
-            <h4 className="font-['Playfair_Display',serif] text-base font-bold text-[#0B3D2E] mb-4">
+            <h4 className="font-['Playfair_Display',serif] text-base font-bold text-[#0B3D20] mb-4">
               Navigasi
             </h4>
             <ul className="space-y-2 font-sans text-xs sm:text-sm text-[#4A4A4A]">
               {NAV_LINKS.map(({ label, href }) => (
                 <li key={label}>
-                  <Link href={href} className="hover:text-[#0B3D2E] hover:font-semibold transition-all">
+                  <Link href={href} className="hover:text-[#0B3D20] hover:font-semibold transition-all">
                     {label}
                   </Link>
                 </li>
@@ -125,14 +116,13 @@ export default function Footer() {
 
           {/* Col 3: Popular Menu */}
           <div>
-            <h4 className="font-['Playfair_Display',serif] text-base font-bold text-[#0B3D2E] mb-4">
+            <h4 className="font-['Playfair_Display',serif] text-base font-bold text-[#0B3D20] mb-4">
               Menu Populer
             </h4>
             <ul className="space-y-2.5 font-sans">
-              {POPULAR_ITEMS.map(({ name, price }) => (
+              {POPULAR_ITEMS.map(({ name }) => (
                 <li key={name} className="flex items-center justify-between text-xs sm:text-sm">
-                  <span className="text-[#4A4A4A] hover:text-[#0B3D2E] transition-colors">{name}</span>
-                  <span className="text-[#C8A96E] font-semibold text-[11px] flex-shrink-0 ml-2">{price}</span>
+                  <span className="text-[#4A4A4A] hover:text-[#0B3D20] transition-colors">{name}</span>
                 </li>
               ))}
             </ul>
@@ -140,19 +130,19 @@ export default function Footer() {
 
           {/* Col 4: Contact */}
           <div className="space-y-4">
-            <h4 className="font-['Playfair_Display',serif] text-base font-bold text-[#0B3D2E]">
+            <h4 className="font-['Playfair_Display',serif] text-base font-bold text-[#0B3D20]">
               Kontak Kami
             </h4>
 
             <div className="flex items-start gap-3 text-xs sm:text-sm text-[#4A4A4A] font-sans">
-              <div className="w-8 h-8 rounded-xl bg-[#0B3D2E]/8 text-[#0B3D2E] flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div className="w-8 h-8 rounded-xl bg-[#0B3D20]/8 text-[#0B3D20] flex items-center justify-center flex-shrink-0 mt-0.5">
                 <MapPin className="w-4 h-4" />
               </div>
               <span>Vila Mutiara Cikarang 2, Blok B2 No. 30, Sukasejati, Cikarang Selatan, Bekasi</span>
             </div>
 
             <div className="flex items-center gap-3 text-xs sm:text-sm text-[#4A4A4A] font-sans">
-              <div className="w-8 h-8 rounded-xl bg-[#0B3D2E]/8 text-[#0B3D2E] flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-[#0B3D20]/8 text-[#0B3D20] flex items-center justify-center flex-shrink-0">
                 <Clock className="w-4 h-4" />
               </div>
               <span>06:30 – 20:00 WIB (Setiap Hari)</span>
@@ -165,7 +155,7 @@ export default function Footer() {
                   href={getWhatsAppLink('Halo, saya ingin memesan di Toko Kuweh.', n.phone)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 text-xs text-[#4A4A4A] hover:text-[#0B3D2E] font-sans transition-colors"
+                  className="flex items-center gap-2.5 text-xs text-[#4A4A4A] hover:text-[#0B3D20] font-sans transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5 text-[#C8A96E] flex-shrink-0" />
                   <span>{n.display}</span>
@@ -188,7 +178,7 @@ export default function Footer() {
       {/* ── Floating WhatsApp FAB ── */}
       <div className="fixed bottom-6 right-6 z-40 group">
         {/* Tooltip */}
-        <div className="absolute bottom-16 right-0 bg-[#0B3D2E] text-white text-xs font-semibold px-3 py-2 rounded-xl shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+        <div className="absolute bottom-16 right-0 bg-[#0B3D20] text-white text-xs font-semibold px-3 py-2 rounded-xl shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
           Chat WhatsApp Kami
         </div>
 
@@ -202,9 +192,9 @@ export default function Footer() {
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.93 }}
           aria-label="Chat WhatsApp Toko Kuweh"
-          className="w-14 h-14 rounded-full bg-[#0B3D2E] hover:bg-[#114D3A] text-white flex items-center justify-center shadow-2xl border-2 border-[#C8A96E] transition-colors"
+          className="w-14 h-14 rounded-full bg-[#0B3D20] hover:bg-[#134E2C] text-white flex items-center justify-center shadow-2xl border-2 border-[#C8A96E] transition-colors"
         >
-          <MessageCircle className="w-7 h-7 fill-white text-[#0B3D2E]" />
+          <MessageCircle className="w-7 h-7 fill-white text-[#0B3D20]" />
         </motion.a>
       </div>
     </footer>

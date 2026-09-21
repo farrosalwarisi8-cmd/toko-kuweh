@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Check, ShoppingBag, Sparkles, MessageCircle, AlertCircle, History } from 'lucide-react';
+import { X, Check, Sparkles, MessageCircle, AlertCircle, History } from 'lucide-react';
 import { formatRupiah, getWhatsAppLink } from '@/utils/whatsapp';
 
 interface SnackBoxModalProps {
@@ -94,42 +94,46 @@ export default function SnackBoxModal({ isOpen, onClose }: SnackBoxModalProps) {
       setIsDraftRestored(false);
     };
 
-    try {
-      const raw = window.localStorage.getItem(DRAFT_KEY);
-      if (!raw) {
+    const loadDraft = () => {
+      try {
+        const raw = window.localStorage.getItem(DRAFT_KEY);
+        if (!raw) {
+          applyDefaults();
+          return;
+        }
+        const draft = JSON.parse(raw);
+        const tier = TIERS.find((t) => t.id === draft?.selectedTierId) ?? TIERS[0];
+        setSelectedTier(tier);
+        setSelectedKue(
+          Array.isArray(draft?.selectedKue)
+            ? draft.selectedKue
+                .filter((k: unknown) => AVAILABLE_KUE.some((a) => a.name === k))
+                .slice(0, tier.itemsAllowed)
+            : []
+        );
+        setBoxQuantity(
+          typeof draft?.boxQuantity === 'number' && draft.boxQuantity >= tier.minBox
+            ? draft.boxQuantity
+            : tier.minBox
+        );
+        setEventDate(typeof draft?.eventDate === 'string' ? draft.eventDate : '');
+        setEventNotes(typeof draft?.eventNotes === 'string' ? draft.eventNotes : '');
+        setLetShopChoose(draft?.letShopChoose === true);
+        // Anggap sebagai draf hanya jika ada isian yang sudah diubah dari default
+        const hasContent =
+          (Array.isArray(draft?.selectedKue) && draft.selectedKue.length > 0) ||
+          draft?.selectedTierId !== TIERS[0].id ||
+          (typeof draft?.boxQuantity === 'number' && draft.boxQuantity > TIERS[0].minBox) ||
+          (typeof draft?.eventDate === 'string' && draft.eventDate !== '') ||
+          (typeof draft?.eventNotes === 'string' && draft.eventNotes !== '') ||
+          draft?.letShopChoose === true;
+        setIsDraftRestored(hasContent);
+      } catch {
         applyDefaults();
-        return;
       }
-      const draft = JSON.parse(raw);
-      const tier = TIERS.find((t) => t.id === draft?.selectedTierId) ?? TIERS[0];
-      setSelectedTier(tier);
-      setSelectedKue(
-        Array.isArray(draft?.selectedKue)
-          ? draft.selectedKue
-              .filter((k: unknown) => AVAILABLE_KUE.some((a) => a.name === k))
-              .slice(0, tier.itemsAllowed)
-          : []
-      );
-      setBoxQuantity(
-        typeof draft?.boxQuantity === 'number' && draft.boxQuantity >= tier.minBox
-          ? draft.boxQuantity
-          : tier.minBox
-      );
-      setEventDate(typeof draft?.eventDate === 'string' ? draft.eventDate : '');
-      setEventNotes(typeof draft?.eventNotes === 'string' ? draft.eventNotes : '');
-      setLetShopChoose(draft?.letShopChoose === true);
-      // Anggap sebagai draf hanya jika ada isian yang sudah diubah dari default
-      const hasContent =
-        (Array.isArray(draft?.selectedKue) && draft.selectedKue.length > 0) ||
-        draft?.selectedTierId !== TIERS[0].id ||
-        (typeof draft?.boxQuantity === 'number' && draft.boxQuantity > TIERS[0].minBox) ||
-        (typeof draft?.eventDate === 'string' && draft.eventDate !== '') ||
-        (typeof draft?.eventNotes === 'string' && draft.eventNotes !== '') ||
-        draft?.letShopChoose === true;
-      setIsDraftRestored(hasContent);
-    } catch {
-      applyDefaults();
-    }
+    };
+
+    queueMicrotask(loadDraft);
   }, [isOpen]);
 
   // Simpan draf ke localStorage setiap ada perubahan selama modal terbuka
@@ -156,7 +160,10 @@ export default function SnackBoxModal({ isOpen, onClose }: SnackBoxModalProps) {
   // - User tutup via X -> history.back() sendiri, popstate-nya diabaikan via flag
   const ignoreNextPopState = useRef(false);
   const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -286,7 +293,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
             className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden z-10 my-6 max-h-[90vh] flex flex-col"
           >
             {/* Modal Header */}
-            <div className="bg-[#0B3D2E] text-white p-5 sm:p-6 relative border-b border-[#C8A96E]/30">
+            <div className="bg-[#0B3D20] text-white p-5 sm:p-6 relative border-b border-[#C8A96E]/30">
               <button
                 onClick={requestClose}
                 className="absolute top-4 right-4 p-2 rounded-full text-white/70 hover:text-white hover:bg-white/10 transition-colors"
@@ -312,7 +319,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                       <button
                         type="button"
                         onClick={handleResetDraft}
-                        className="text-[11px] font-bold text-[#0B3D2E] hover:text-[#C8A96E] underline underline-offset-2 whitespace-nowrap"
+                        className="text-[11px] font-bold text-[#0B3D20] hover:text-[#C8A96E] underline underline-offset-2 whitespace-nowrap"
                       >
                         Mulai dari awal
                       </button>
@@ -357,7 +364,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
             <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 text-[#1A1A1A]">
               {/* Step 1: Pilih Tier Paket */}
               <div>
-                <label className="block font-['Playfair_Display',serif] font-bold text-sm sm:text-base text-[#0B3D2E] mb-2.5">
+                <label className="block font-['Playfair_Display',serif] font-bold text-sm sm:text-base text-[#0B3D20] mb-2.5">
                   1. Pilih Pilihan Paket:
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -375,11 +382,11 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                         }`}
                       >
                         {tier.tag && (
-                          <span className="text-[10px] uppercase font-bold bg-[#114D3A] text-[#F5E6C8] px-2 py-0.5 rounded-full inline-block mb-1.5">
+                          <span className="text-[10px] uppercase font-bold bg-[#134E2C] text-[#F5E6C8] px-2 py-0.5 rounded-full inline-block mb-1.5">
                             {tier.tag}
                           </span>
                         )}
-                        <h4 className="font-bold text-sm text-[#0B3D2E]">{tier.name}</h4>
+                        <h4 className="font-bold text-sm text-[#0B3D20]">{tier.name}</h4>
                         <p className="font-['Playfair_Display',serif] text-base font-bold text-[#C8A96E] my-1">
                           {formatRupiah(tier.price)}
                           <span className="text-xs font-normal text-gray-500">/box</span>
@@ -396,7 +403,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
               {/* Step 2: Pilih Isian Kue */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="font-['Playfair_Display',serif] font-bold text-sm sm:text-base text-[#0B3D2E]">
+                  <label className="font-['Playfair_Display',serif] font-bold text-sm sm:text-base text-[#0B3D20]">
                     2. Pilih {selectedTier.itemsAllowed} Varian Kue Isian:
                   </label>
                   <motion.span
@@ -404,7 +411,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                     initial={{ scale: 1.12, opacity: 0.6 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-[#114D3A]/10 text-[#0B3D2E]"
+                    className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-[#134E2C]/10 text-[#0B3D20]"
                   >
                     {letShopChoose
                       ? 'Dipilihkan Toko'
@@ -425,7 +432,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                         transition={{ duration: 0.3, ease: 'easeOut' }}
                         className={`flex items-center justify-between p-2.5 rounded-xl border text-left text-xs font-medium transition-colors ${
                           isPicked
-                            ? 'bg-[#0B3D2E] text-[#F5E6C8] border-[#0B3D2E] shadow-sm'
+                            ? 'bg-[#0B3D20] text-[#F5E6C8] border-[#0B3D20] shadow-sm'
                             : 'bg-white text-gray-700 border-[#E8E4DC] hover:border-[#C8A96E]'
                         }`}
                       >
@@ -464,8 +471,8 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                   }}
                   className={`w-full mt-3 flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 border-dashed text-xs font-semibold transition-all ${
                     letShopChoose
-                      ? 'border-[#C8A96E] bg-[#C8A96E]/10 text-[#0B3D2E]'
-                      : 'border-[#E8E4DC] text-gray-600 hover:border-[#C8A96E] hover:text-[#0B3D2E]'
+                      ? 'border-[#C8A96E] bg-[#C8A96E]/10 text-[#0B3D20]'
+                      : 'border-[#E8E4DC] text-gray-600 hover:border-[#C8A96E] hover:text-[#0B3D20]'
                   }`}
                 >
                   <Sparkles className={`w-4 h-4 ${letShopChoose ? 'text-[#C8A96E]' : 'text-gray-400'}`} />
@@ -485,7 +492,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
               {/* Step 3: Jumlah Box & Tanggal */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-gray-100">
                 <div>
-                  <label className="block text-xs font-bold text-[#0B3D2E] mb-1">
+                  <label className="block text-xs font-bold text-[#0B3D20] mb-1">
                     Jumlah Box (Minimal {selectedTier.minBox} box):
                   </label>
                   <div className="flex items-center gap-2">
@@ -501,7 +508,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#0B3D2E] mb-1">
+                  <label className="block text-xs font-bold text-[#0B3D20] mb-1">
                     Tanggal Diperlukan:
                   </label>
                   <input
@@ -520,7 +527,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#0B3D2E] mb-1">
+                <label className="block text-xs font-bold text-[#0B3D20] mb-1">
                   Catatan Tambahan / Alamat Pengiriman di Cikarang:
                 </label>
                 <textarea
@@ -536,7 +543,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
               <div className="bg-[#F7F3ED] rounded-2xl p-4 border border-[#C8A96E]/40 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <div>
                   <p className="text-xs text-gray-600">Estimasi Total ({boxQuantity} Box):</p>
-                  <p className="font-['Playfair_Display',serif] text-2xl font-bold text-[#0B3D2E]">
+                  <p className="font-['Playfair_Display',serif] text-2xl font-bold text-[#0B3D20]">
                     {formatRupiah(totalPrice)}
                   </p>
                   <p className="text-[11px] text-gray-500">
@@ -553,11 +560,11 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                   transition={{ duration: 0.35, ease: 'easeOut' }}
                   className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 font-bold text-sm px-6 py-3.5 rounded-full shadow-lg transition-colors ${
                     canOrder
-                      ? 'bg-[#0B3D2E] hover:bg-[#114D3A] text-[#F5E6C8] cursor-pointer'
+                      ? 'bg-[#0B3D20] hover:bg-[#134E2C] text-[#F5E6C8] cursor-pointer'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  <MessageCircle className={`w-4 h-4 transition-colors ${canOrder ? 'fill-[#C8A96E] text-[#0B3D2E]' : 'fill-gray-400 text-gray-300'}`} />
+                  <MessageCircle className={`w-4 h-4 transition-colors ${canOrder ? 'fill-[#C8A96E] text-[#0B3D20]' : 'fill-gray-400 text-gray-300'}`} />
                   <span className="relative inline-block">
                     <AnimatePresence mode="wait" initial={false}>
                       <motion.span

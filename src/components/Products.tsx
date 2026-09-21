@@ -3,19 +3,12 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, MessageCircle, ChevronLeft, ChevronRight, Box, Sparkles } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight, Box, Sparkles } from 'lucide-react';
 import { CATEGORIES, PRODUCTS, Product } from '@/data/products';
-import { formatRupiah, getWhatsAppLink } from '@/utils/whatsapp';
+import { getWhatsAppLink } from '@/utils/whatsapp';
 
 interface ProductsProps {
   onOpenSnackBoxBuilder?: () => void;
-}
-
-// Helper: format price short form
-function shortPrice(price: number): string {
-  if (price >= 1000000) return `${(price / 1000000).toFixed(0)}jt`;
-  if (price >= 1000) return `${(price / 1000).toFixed(0)}rb`;
-  return String(price);
 }
 
 export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
@@ -43,7 +36,7 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
   }
 
   const handleOrder = (product: Product) => {
-    const msg = `Halo Toko Kuweh Cikarang, saya ingin memesan:\n🍰 *Produk:* ${product.name}\n💰 *Harga:* ${formatRupiah(product.price)} ${product.priceNote || ''}\n\nBolehkah saya tahu ketersediaan dan minimal pemesanan? Terima kasih.`;
+    const msg = `Halo Toko Kuweh Cikarang, saya ingin memesan:\n🍰 *Produk:* ${product.name}\n\nBolehkah saya tahu ketersediaan dan minimal pemesanan? Terima kasih.`;
     window.open(getWhatsAppLink(msg), '_blank');
   };
 
@@ -54,10 +47,10 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
 
         {/* ── Section Header ── */}
         <div className="text-center mb-10">
-          <span className="font-['Great_Vibes',cursive] text-[#1A6B4F] text-3xl block mb-1">
+          <span className="font-['Great_Vibes',cursive] text-[#1E673C] text-3xl block mb-1">
             ✦ Menu Pilihan ✦
           </span>
-          <h2 className="font-['Playfair_Display',serif] text-3xl sm:text-4xl font-bold text-[#0B3D2E]">
+          <h2 className="font-['Playfair_Display',serif] text-3xl sm:text-4xl font-bold text-[#0B3D20]">
             Kue &amp; Jajanan Terbaik Kami
           </h2>
           <p className="text-[#4A4A4A] text-sm mt-2 max-w-lg mx-auto font-sans">
@@ -71,7 +64,7 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
           className="mb-12 bg-[#F8F4EE] rounded-3xl border-2 border-[#C8A96E]/40 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-sm"
         >
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-[#0B3D2E] text-[#C8A96E] flex items-center justify-center text-2xl flex-shrink-0 shadow-md">
+            <div className="w-14 h-14 rounded-2xl bg-[#0B3D20] text-[#C8A96E] flex items-center justify-center text-2xl flex-shrink-0 shadow-md">
               🍱
             </div>
             <div>
@@ -81,7 +74,7 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
                   Paket Spesial Acara &amp; Rapat
                 </span>
               </div>
-              <h3 className="font-['Playfair_Display',serif] text-xl font-bold text-[#0B3D2E]">
+              <h3 className="font-['Playfair_Display',serif] text-xl font-bold text-[#0B3D20]">
                 Snack Box Mulai{' '}
                 <span className="text-[#C8A96E]">Rp 10.000 / Box</span>
               </h3>
@@ -93,7 +86,7 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
           <button
             type="button"
             onClick={onOpenSnackBoxBuilder}
-            className="flex-shrink-0 inline-flex items-center gap-2 bg-[#0B3D2E] hover:bg-[#114D3A] text-white font-bold text-sm px-7 py-3.5 rounded-full shadow-lg transition-all active:scale-95 font-sans"
+            className="flex-shrink-0 inline-flex items-center gap-2 bg-[#0B3D20] hover:bg-[#134E2C] text-white font-bold text-sm px-7 py-3.5 rounded-full shadow-lg transition-all active:scale-95 font-sans"
           >
             <Box className="w-4 h-4" />
             Custom Snack Box
@@ -110,8 +103,8 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
                 onClick={() => handleCategoryChange(cat.id)}
                 className={`px-5 py-2 rounded-full text-sm font-semibold font-sans transition-all duration-200 ${
                   isActive
-                    ? 'bg-[#0B3D2E] text-white shadow-md'
-                    : 'bg-gray-100 text-[#4A4A4A] hover:bg-[#F5E6C8] hover:text-[#0B3D2E]'
+                    ? 'bg-[#0B3D20] text-white shadow-md'
+                    : 'bg-gray-100 text-[#4A4A4A] hover:bg-[#F5E6C8] hover:text-[#0B3D20]'
                 }`}
               >
                 {cat.label}
@@ -129,7 +122,7 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
             aria-label="Produk sebelumnya"
             className="absolute left-0 top-1/2 -translate-y-8 -translate-x-3 sm:-translate-x-5 z-20 w-11 h-11 rounded-full bg-white shadow-xl border border-gray-100 flex items-center justify-center hover:bg-[#F5E6C8] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
           >
-            <ChevronLeft className="w-5 h-5 text-[#0B3D2E]" />
+            <ChevronLeft className="w-5 h-5 text-[#0B3D20]" />
           </button>
 
           {/* Cards grid — with top padding to accommodate the floating image */}
@@ -145,16 +138,15 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
               {visibleIndices.map((idx) => {
                 const product = filtered[idx];
                 const isCenter = idx === centerIdx;
-                const cardBg = isCenter ? 'bg-[#C8A96E]' : 'bg-[#0B3D2E]';
-                const priceBadgeBg = isCenter ? 'bg-[#0B3D2E] text-white' : 'bg-[#C8A96E] text-[#0B3D2E]';
-                const titleColor = isCenter ? 'text-[#0B3D2E]' : 'text-white';
-                const scriptColor = isCenter ? 'text-[#0B3D2E]/70' : 'text-[#C8A96E]';
-                const starColor = isCenter ? 'fill-[#0B3D2E] text-[#0B3D2E]' : 'fill-[#C8A96E] text-[#C8A96E]';
-                const descColor = isCenter ? 'text-[#0B3D2E]/75' : 'text-white/70';
+                const cardBg = isCenter ? 'bg-[#C8A96E]' : 'bg-[#0B3D20]';
+                const titleColor = isCenter ? 'text-[#0B3D20]' : 'text-white';
+                const scriptColor = isCenter ? 'text-[#0B3D20]/70' : 'text-[#C8A96E]';
+                const starColor = isCenter ? 'fill-[#0B3D20] text-[#0B3D20]' : 'fill-[#C8A96E] text-[#C8A96E]';
+                const descColor = isCenter ? 'text-[#0B3D20]/75' : 'text-white/70';
                 const btnStyle = isCenter
-                  ? 'bg-[#0B3D2E] text-white hover:bg-[#114D3A]'
-                  : 'bg-white text-[#0B3D2E] hover:bg-[#F5E6C8]';
-                const ratingColor = isCenter ? 'text-[#0B3D2E]' : 'text-white';
+                  ? 'bg-[#0B3D20] text-white hover:bg-[#134E2C]'
+                  : 'bg-white text-[#0B3D20] hover:bg-[#F5E6C8]';
+                const ratingColor = isCenter ? 'text-[#0B3D20]' : 'text-white';
 
                 // On mobile: only show center card to prevent floating image overlap
                 const hiddenOnMobile = !isCenter ? 'hidden sm:block' : 'block';
@@ -171,21 +163,6 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
                     {/* Floating image area — overflows above card */}
                     <div className="absolute -top-16 inset-x-0 flex justify-center z-10 px-6">
                       <div className="relative w-48 h-36">
-                        {/* Price badge on image */}
-                        <div
-                          className={`absolute -top-3 -right-3 z-20 w-[60px] h-[60px] rounded-full flex flex-col items-center justify-center shadow-lg border-4 border-white font-sans ${priceBadgeBg}`}
-                        >
-                          <span className="text-[7px] uppercase tracking-wider font-semibold leading-none opacity-80">
-                            HARGA
-                          </span>
-                          <span className="text-sm font-black leading-none font-['Playfair_Display',serif]">
-                            {shortPrice(product.price)}
-                          </span>
-                          {product.priceNote && (
-                            <span className="text-[7px] opacity-60 leading-none">/pcs</span>
-                          )}
-                        </div>
-
                         <Image
                           src={product.image}
                           alt={product.name}
@@ -244,7 +221,7 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
             aria-label="Produk berikutnya"
             className="absolute right-0 top-1/2 -translate-y-8 translate-x-3 sm:translate-x-5 z-20 w-11 h-11 rounded-full bg-white shadow-xl border border-gray-100 flex items-center justify-center hover:bg-[#F5E6C8] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
           >
-            <ChevronRight className="w-5 h-5 text-[#0B3D2E]" />
+            <ChevronRight className="w-5 h-5 text-[#0B3D20]" />
           </button>
         </div>
 
@@ -258,7 +235,7 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
                 aria-label={`Produk ${idx + 1}`}
                 className={`rounded-full transition-all duration-300 ${
                   idx === centerIdx
-                    ? 'w-6 h-2.5 bg-[#0B3D2E]'
+                    ? 'w-6 h-2.5 bg-[#0B3D20]'
                     : 'w-2.5 h-2.5 bg-gray-200 hover:bg-[#C8A96E]'
                 }`}
               />

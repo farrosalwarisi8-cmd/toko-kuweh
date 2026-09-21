@@ -2,38 +2,31 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Leaf, Clock, Heart, Award, CheckCircle2 } from 'lucide-react';
+import { Leaf, Clock, Heart, Award } from 'lucide-react';
 
 export default function About() {
   const features = [
     {
-      icon: <Leaf className="w-6 h-6 text-[#1A6B4F]" />,
+      icon: <Leaf className="w-6 h-6 text-[#1E673C]" />,
       title: 'Bahan Alami Premium',
       desc: 'Bahan-bahan segar terpilih tanpa bahan pengawet berbahaya. Menggunakan santan murni dan gula aren asli.',
     },
     {
-      icon: <Clock className="w-6 h-6 text-[#1A6B4F]" />,
+      icon: <Clock className="w-6 h-6 text-[#1E673C]" />,
       title: 'Resep Turun Temurun',
       desc: 'Resep autentik khas warisan keluarga yang menjaga kelezatan asli kue tradisional nusantara.',
     },
     {
-      icon: <Award className="w-6 h-6 text-[#1A6B4F]" />,
+      icon: <Award className="w-6 h-6 text-[#1E673C]" />,
       title: 'Kualitas Selalu Fresh',
       desc: 'Diproduksi segar setiap hari secara higienis, menjamin tekstur empuk, renyah, dan aroma wangi.',
     },
     {
-      icon: <Heart className="w-6 h-6 text-[#1A6B4F]" />,
+      icon: <Heart className="w-6 h-6 text-[#1E673C]" />,
       title: 'Dibuat dengan Cinta',
       desc: 'Perhatian penuh pada detail tampilan dan kelezatan rasa untuk memeriahkan setiap momen spesial Anda.',
     },
   ];
-
-  const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: '-50px' },
-    transition: { duration: 0.6, ease: 'easeOut' },
-  };
 
   return (
     <section id="tentang" className="py-16 lg:py-24 bg-[#FDFBF7] relative overflow-hidden">
@@ -43,10 +36,10 @@ export default function About() {
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
-          <span className="font-['Great_Vibes',cursive] text-[#1A6B4F] text-2xl lg:text-3xl block mb-2">
+          <span className="font-['Great_Vibes',cursive] text-[#1E673C] text-2xl lg:text-3xl block mb-2">
             ✦ Tentang Kami ✦
           </span>
-          <h2 className="font-['Playfair_Display',serif] text-[#0B3D2E] text-2xl sm:text-3xl lg:text-4xl font-bold leading-snug">
+          <h2 className="font-['Playfair_Display',serif] text-[#0B3D20] text-2xl sm:text-3xl lg:text-4xl font-bold leading-snug">
             Cerita di Balik Setiap Kue yang Kami Sajikan
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[#C8A96E] to-transparent mx-auto mt-4" />
@@ -79,11 +72,11 @@ export default function About() {
 
               {/* Float Tag */}
               <div className="absolute -bottom-5 -right-3 bg-white border border-[#E8E4DC] p-3.5 rounded-2xl shadow-xl flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#0B3D2E] text-[#C8A96E] flex items-center justify-center font-bold text-lg">
+                <div className="w-10 h-10 rounded-xl bg-[#0B3D20] text-[#C8A96E] flex items-center justify-center font-bold text-lg">
                   10+
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-[#0B3D2E]">Tahun Pengalaman</p>
+                  <p className="text-xs font-bold text-[#0B3D20]">Tahun Pengalaman</p>
                   <p className="text-[11px] text-[#8A8A7A]">Membuat Kue Lezat</p>
                 </div>
               </div>
@@ -100,8 +93,8 @@ export default function About() {
           >
             <div className="space-y-4 text-sm sm:text-base text-[#4A4A4A] leading-relaxed mb-8">
               <p>
-                <strong className="text-[#0B3D2E] font-semibold">Toko Kuweh</strong> adalah usaha kuliner yang berbasis di{' '}
-                <span className="text-[#1A6B4F] font-semibold underline decoration-[#C8A96E] underline-offset-4">
+                <strong className="text-[#0B3D20] font-semibold">Toko Kuweh</strong> adalah usaha kuliner yang berbasis di{' '}
+                <span className="text-[#1E673C] font-semibold underline decoration-[#C8A96E] underline-offset-4">
                   Cikarang Selatan, Bekasi
                 </span>
                 , yang menghadirkan beragam pilihan kue dan jajanan untuk berbagai kebutuhan dan momen istimewa.
@@ -112,7 +105,7 @@ export default function About() {
               <p>
                 Mulai dari kebutuhan santai pribadi di rumah, acara keluarga, arisan, syukuran, hampers, hingga berbagai kegiatan kantor dan perayaan akbar, Toko Kuweh siap menjadi bagian dari setiap momen spesial Anda.
               </p>
-              <div className="inline-block px-4 py-2 rounded-xl bg-[#114D3A]/10 border-l-4 border-[#C8A96E] text-xs sm:text-sm font-medium text-[#0B3D2E]">
+              <div className="inline-block px-4 py-2 rounded-xl bg-[#134E2C]/10 border-l-4 border-[#C8A96E] text-xs sm:text-sm font-medium text-[#0B3D20]">
                 <em>&ldquo;Dibuat dengan perhatian, disajikan dengan kualitas.&rdquo;</em>
               </div>
             </div>
@@ -128,10 +121,10 @@ export default function About() {
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
                   className="bg-white p-4 sm:p-5 rounded-2xl border border-[#E8E4DC] shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#1A6B4F]/10 flex items-center justify-center mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#1E673C]/10 flex items-center justify-center mb-3">
                     {feature.icon}
                   </div>
-                  <h3 className="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#0B3D2E] mb-1">
+                  <h3 className="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#0B3D20] mb-1">
                     {feature.title}
                   </h3>
                   <p className="text-xs text-[#8A8A7A] leading-relaxed">

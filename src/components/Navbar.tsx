@@ -46,7 +46,7 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
 
             {/* Logo */}
             <Link href="#beranda" className="flex items-center gap-2.5 group flex-shrink-0">
-              <div className="w-10 h-10 rounded-xl bg-[#0B3D2E] p-1 overflow-hidden flex items-center justify-center shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-[#0B3D20] p-1 overflow-hidden flex items-center justify-center shadow-sm">
                 <Image
                   src="/images/logo.jpg"
                   alt="Logo Toko Kuweh"
@@ -57,7 +57,7 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
                 />
               </div>
               <div className="flex flex-col leading-none">
-                <span className="font-['Playfair_Display',serif] text-lg font-bold text-[#0B3D2E] group-hover:text-[#1A6B4F] transition-colors">
+                <span className="font-['Playfair_Display',serif] text-lg font-bold text-[#0B3D20] group-hover:text-[#1E673C] transition-colors">
                   Toko Kuweh
                 </span>
                 <span className="text-[9px] tracking-widest uppercase text-[#8A8A7A] font-sans mt-0.5">
@@ -72,7 +72,7 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="font-sans text-sm font-medium text-[#4A4A4A] hover:text-[#0B3D2E] transition-colors relative group py-1"
+                  className="font-sans text-sm font-medium text-[#4A4A4A] hover:text-[#0B3D20] transition-colors relative group py-1"
                 >
                   {link.label}
                   <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#C8A96E] transition-all duration-200 group-hover:w-full rounded-full" />
@@ -84,7 +84,7 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
             <div className="hidden md:flex items-center gap-2.5 flex-shrink-0">
               <a
                 href="tel:+6281290561840"
-                className="hidden lg:flex items-center gap-2 border border-[#C8A96E] text-[#0B3D2E] hover:bg-[#FFF8EE] px-4 py-2 rounded-full text-xs font-semibold transition-all"
+                className="hidden lg:flex items-center gap-2 border border-[#C8A96E] text-[#0B3D20] hover:bg-[#FFF8EE] px-4 py-2 rounded-full text-xs font-semibold transition-all"
               >
                 <Phone className="w-3.5 h-3.5 text-[#C8A96E]" />
                 <span>0812-9056-1840</span>
@@ -94,7 +94,7 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
                 href={waUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-[#C8A96E] hover:bg-[#0B3D2E] text-[#0B3D2E] hover:text-white px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-300 shadow-sm"
+                className="flex items-center gap-2 bg-[#C8A96E] hover:bg-[#0B3D20] text-[#0B3D20] hover:text-white px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-300 shadow-sm"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
                 <span>Pesan WA</span>
@@ -105,7 +105,7 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="md:hidden p-2 text-[#0B3D2E] hover:text-[#1A6B4F] transition-colors"
+              className="md:hidden p-2 text-[#0B3D20] hover:text-[#1E673C] transition-colors"
               aria-label="Buka Menu"
             >
               <Menu className="w-6 h-6" />
@@ -136,10 +136,10 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
               {/* Drawer Header */}
               <div className="flex items-center justify-between p-5 border-b border-gray-100">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-[#0B3D2E] p-1 overflow-hidden flex items-center justify-center">
+                  <div className="w-9 h-9 rounded-xl bg-[#0B3D20] p-1 overflow-hidden flex items-center justify-center">
                     <Image src="/images/logo.jpg" alt="Logo" width={32} height={32} className="w-full h-full object-contain" />
                   </div>
-                  <span className="font-['Playfair_Display',serif] text-base font-bold text-[#0B3D2E]">Toko Kuweh</span>
+                  <span className="font-['Playfair_Display',serif] text-base font-bold text-[#0B3D20]">Toko Kuweh</span>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
@@ -163,7 +163,7 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
                       <Link
                         href={link.href}
                         onClick={() => setIsOpen(false)}
-                        className="flex items-center justify-between py-3 px-4 rounded-xl text-[#0B3D2E] font-medium font-sans text-sm hover:bg-[#FFF8EE] hover:text-[#0B3D2E] transition-all"
+                        className="flex items-center justify-between py-3 px-4 rounded-xl text-[#0B3D20] font-medium font-sans text-sm hover:bg-[#FFF8EE] hover:text-[#0B3D20] transition-all"
                       >
                         <span>{link.label}</span>
                         <span className="text-[#C8A96E] text-xs">→</span>
@@ -178,7 +178,7 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
                 {onOpenSnackBoxBuilder && (
                   <button
                     onClick={() => { setIsOpen(false); onOpenSnackBoxBuilder(); }}
-                    className="w-full flex items-center justify-center gap-2 border-2 border-[#C8A96E] text-[#0B3D2E] py-3 rounded-xl font-semibold text-sm transition-colors hover:bg-[#FFF8EE]"
+                    className="w-full flex items-center justify-center gap-2 border-2 border-[#C8A96E] text-[#0B3D20] py-3 rounded-xl font-semibold text-sm transition-colors hover:bg-[#FFF8EE]"
                   >
                     <ShoppingBag className="w-4 h-4" />
                     Custom Snack Box (10rb)
@@ -188,7 +188,7 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
                   href={waUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 bg-[#0B3D2E] text-white py-3 rounded-xl font-semibold text-sm transition-colors hover:bg-[#114D3A]"
+                  className="w-full flex items-center justify-center gap-2 bg-[#0B3D20] text-white py-3 rounded-xl font-semibold text-sm transition-colors hover:bg-[#134E2C]"
                 >
                   <MessageCircle className="w-4 h-4" />
                   Pesan via WhatsApp
