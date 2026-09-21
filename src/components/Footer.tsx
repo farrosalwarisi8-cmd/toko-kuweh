@@ -28,17 +28,18 @@ const NAV_LINKS = [
   { label: 'Beranda', href: '#beranda' },
   { label: 'Tentang Kami', href: '#tentang' },
   { label: 'Katalog Produk', href: '#produk' },
+  { label: 'Nasi Box', href: '#nasibox' },
   { label: 'Paket Snack Box', href: '#snackbox' },
   { label: 'Peta Lokasi', href: '#lokasi' },
   { label: 'FAQ', href: '#faq' },
 ];
 
 const POPULAR_ITEMS = [
-  { name: 'Lemper Ayam Spesial', price: '' },
-  { name: 'Risol Mayo Creamy', price: '' },
-  { name: 'Lumpia Special', price: '' },
-  { name: 'Kue Sus Vla Vanila', price: '' },
-  { name: 'Snack Box Hemat', price: '' },
+  { name: 'Nasi Box Ayam Suwir' },
+  { name: 'Lemper Ayam Spesial' },
+  { name: 'Risol Mayo Creamy' },
+  { name: 'Lumpia Special' },
+  { name: 'Kue Sus Vla Vanila' },
 ];
 
 const SOCIAL_LINKS = [

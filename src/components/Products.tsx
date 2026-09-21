@@ -3,15 +3,16 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, ChevronLeft, ChevronRight, Box, Sparkles } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight, Box, Sparkles, UtensilsCrossed } from 'lucide-react';
 import { CATEGORIES, PRODUCTS, Product } from '@/data/products';
 import { getWhatsAppLink } from '@/utils/whatsapp';
 
 interface ProductsProps {
   onOpenSnackBoxBuilder?: () => void;
+  onOpenNasiBoxBuilder?: () => void;
 }
 
-export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
+export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }: ProductsProps) {
   const [activeCategory, setActiveCategory] = useState<string>('semua');
   const [centerIdx, setCenterIdx] = useState(1);
 
@@ -36,6 +37,10 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
   }
 
   const handleOrder = (product: Product) => {
+    if (product.category === 'nasi-box') {
+      onOpenNasiBoxBuilder?.();
+      return;
+    }
     const msg = `Halo Toko Kuweh Cikarang, saya ingin memesan:\n🍰 *Produk:* ${product.name}\n\nBolehkah saya tahu ketersediaan dan minimal pemesanan? Terima kasih.`;
     window.open(getWhatsAppLink(msg), '_blank');
   };
@@ -54,8 +59,42 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
             Kue &amp; Jajanan Terbaik Kami
           </h2>
           <p className="text-[#4A4A4A] text-sm mt-2 max-w-lg mx-auto font-sans">
-            Dari kue basah tradisional, gorengan gurih, bolu lembut, hingga paket snack box eksklusif.
+            Dari nasi box harian, kue basah tradisional, gorengan gurih, bolu lembut, hingga paket snack box eksklusif.
           </p>
+        </div>
+
+        {/* ── Nasi Box Banner ── */}
+        <div
+          id="nasibox"
+          className="mb-12 bg-[#F8F4EE] rounded-3xl border-2 border-[#C8A96E]/40 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-sm"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-[#1E673C] text-[#F5E6C8] flex items-center justify-center text-2xl flex-shrink-0 shadow-md">
+              <UtensilsCrossed className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <Sparkles className="w-3.5 h-3.5 text-[#C8A96E]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[#C8A96E] font-sans">
+                  Nasi Box Harian &amp; Acara
+                </span>
+              </div>
+              <h3 className="font-['Playfair_Display',serif] text-xl font-bold text-[#0B3D20]">
+                Nasi Box Ayam Suwir &amp; Telur
+              </h3>
+              <p className="text-xs text-[#4A4A4A] mt-1 font-sans max-w-md">
+                Nasi hangat + ayam suwir + telur dadar &amp; ceplok. Bisa juga dibuatkan lauk lain di luar menu sesuai permintaan kamu.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={onOpenNasiBoxBuilder}
+            className="flex-shrink-0 inline-flex items-center gap-2 bg-[#0B3D20] hover:bg-[#134E2C] text-white font-bold text-sm px-7 py-3.5 rounded-full shadow-lg transition-all active:scale-95 font-sans"
+          >
+            <UtensilsCrossed className="w-4 h-4" />
+            Custom Nasi Box
+          </button>
         </div>
 
         {/* ── Snack Box Banner ── */}
@@ -205,7 +244,7 @@ export default function Products({ onOpenSnackBoxBuilder }: ProductsProps) {
                         onClick={() => handleOrder(product)}
                         className={`w-full py-3 px-5 rounded-full font-bold text-sm font-sans transition-all hover:scale-[1.02] active:scale-95 shadow-md ${btnStyle}`}
                       >
-                        PESAN VIA WA
+                        {product.category === 'nasi-box' ? 'PESAN & CUSTOM NASI BOX' : 'PESAN VIA WA'}
                       </button>
                     </div>
                   </motion.div>

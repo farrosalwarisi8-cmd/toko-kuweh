@@ -1,7 +1,7 @@
 export interface Product {
   id: string;
   name: string;
-  category: 'kue-basah' | 'kue-gurih' | 'bolu-tart' | 'snack-box';
+  category: 'kue-basah' | 'kue-gurih' | 'bolu-tart' | 'snack-box' | 'nasi-box';
   categoryLabel: string;
   rating: number;
   reviewCount: number;
@@ -13,6 +13,7 @@ export interface Product {
 
 export const CATEGORIES = [
   { id: 'semua', label: 'Semua Produk' },
+  { id: 'nasi-box', label: 'Nasi Box' },
   { id: 'snack-box', label: 'Paket Snack Box' },
   { id: 'kue-gurih', label: 'Gurih & Asin' },
   { id: 'kue-basah', label: 'Kue Basah & Manis' },
@@ -20,6 +21,31 @@ export const CATEGORIES = [
 ] as const;
 
 export const PRODUCTS: Product[] = [
+  // Nasi Box
+  {
+    id: 'nasi-box-ayam-telur',
+    name: 'Nasi Box Ayam Suwir & Telur',
+    category: 'nasi-box',
+    categoryLabel: 'Nasi Box',
+    rating: 5.0,
+    reviewCount: 140,
+    image: '/images/nasi-box.jpeg',
+    description: 'Nasi putih hangat dengan lauk ayam suwir bumbu manis gurih, telur dadar & ceplok spesial, ditambah sambal dan lalapan segar dalam box rapi. Cocok untuk meeting, acara, dan hajatan.',
+    isPopular: true,
+    minOrder: 'Min. 10 box',
+  },
+  {
+    id: 'nasi-box-custom-lauk',
+    name: 'Nasi Box Custom Lauk',
+    category: 'nasi-box',
+    categoryLabel: 'Nasi Box',
+    rating: 5.0,
+    reviewCount: 68,
+    image: '/images/nasi-box.jpeg',
+    description: 'Pesan di luar menu nasi box? Kami bisa masakkan lauk sesuai permintaan kamu — rendang, ayam goreng, sambal goreng, dan lain-lain. Tulis lauk yang diinginkan saat pemesanan.',
+    minOrder: 'Min. 10 box',
+  },
+
   // Paket Snack Box
   {
     id: 'snackbox-hemat-10k',

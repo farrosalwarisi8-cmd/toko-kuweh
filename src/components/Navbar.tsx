@@ -4,23 +4,25 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { Menu, X, Phone, MessageCircle, ShoppingBag } from 'lucide-react';
+import { Menu, X, Phone, MessageCircle, ShoppingBag, UtensilsCrossed } from 'lucide-react';
 import { getWhatsAppLink } from '@/utils/whatsapp';
 
 interface NavbarProps {
   onOpenSnackBoxBuilder?: () => void;
+  onOpenNasiBoxBuilder?: () => void;
 }
 
 const NAV_LINKS = [
   { label: 'Beranda', href: '#beranda' },
   { label: 'Tentang Kami', href: '#tentang' },
   { label: 'Produk', href: '#produk' },
+  { label: 'Nasi Box', href: '#nasibox' },
   { label: 'Snack Box', href: '#snackbox' },
   { label: 'Lokasi', href: '#lokasi' },
   { label: 'FAQ', href: '#faq' },
 ];
 
-export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
+export default function Navbar({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -175,6 +177,15 @@ export default function Navbar({ onOpenSnackBoxBuilder }: NavbarProps) {
 
               {/* Drawer Footer */}
               <div className="p-4 border-t border-gray-100 space-y-2.5">
+                {onOpenNasiBoxBuilder && (
+                  <button
+                    onClick={() => { setIsOpen(false); onOpenNasiBoxBuilder(); }}
+                    className="w-full flex items-center justify-center gap-2 bg-[#0B3D20] text-white py-3 rounded-xl font-semibold text-sm transition-colors hover:bg-[#134E2C]"
+                  >
+                    <UtensilsCrossed className="w-4 h-4" />
+                    Custom Nasi Box
+                  </button>
+                )}
                 {onOpenSnackBoxBuilder && (
                   <button
                     onClick={() => { setIsOpen(false); onOpenSnackBoxBuilder(); }}
