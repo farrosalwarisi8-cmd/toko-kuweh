@@ -1,7 +1,7 @@
 export interface Product {
   id: string;
   name: string;
-  category: 'kue-basah' | 'kue-gurih' | 'bolu-tart' | 'snack-box' | 'nasi-box';
+  category: 'kue-basah' | 'kue-gurih' | 'bolu-tart' | 'nasi-box';
   categoryLabel: string;
   rating: number;
   reviewCount: number;
@@ -14,14 +14,14 @@ export interface Product {
 export const CATEGORIES = [
   { id: 'semua', label: 'Semua Produk' },
   { id: 'nasi-box', label: 'Nasi Box' },
-  { id: 'snack-box', label: 'Paket Snack Box' },
   { id: 'kue-gurih', label: 'Gurih & Asin' },
   { id: 'kue-basah', label: 'Kue Basah & Manis' },
   { id: 'bolu-tart', label: 'Bolu & Loyang' },
 ] as const;
 
-export const PRODUCTS: Product[] = [
+const PRODUCT_LIST: Product[] = [
   // Nasi Box
+  // nasi-box-ayam-telur: 1 card, gambar dari nasi kotak.jpeg
   {
     id: 'nasi-box-ayam-telur',
     name: 'Nasi Box Ayam Suwir & Telur',
@@ -34,57 +34,8 @@ export const PRODUCTS: Product[] = [
     isPopular: true,
     minOrder: 'Min. 10 box',
   },
-  {
-    id: 'nasi-box-custom-lauk',
-    name: 'Nasi Box Custom Lauk',
-    category: 'nasi-box',
-    categoryLabel: 'Nasi Box',
-    rating: 5.0,
-    reviewCount: 68,
-    image: '/images/nasi-box.jpeg',
-    description: 'Pesan di luar menu nasi box? Kami bisa masakkan lauk sesuai permintaan kamu — rendang, ayam goreng, sambal goreng, dan lain-lain. Tulis lauk yang diinginkan saat pemesanan.',
-    minOrder: 'Min. 10 box',
-  },
-
-  // Paket Snack Box
-  {
-    id: 'snackbox-hemat-10k',
-    name: 'Paket Snack Box Hemat (10K)',
-    category: 'snack-box',
-    categoryLabel: 'Paket Snack Box',
-    rating: 5.0,
-    reviewCount: 310,
-    image: '/images/poster-tokokuweh.jpg',
-    description: 'Pilihan hemat isi 3 item: 1 kue gurih (Risol/Pastel) + 1 kue manis (Dadar Gulung/Sus) + 1 air mineral cup. Box rapi, higienis, cocok untuk rapat & syukuran.',
-    isPopular: true,
-    minOrder: 'Min. 15 box',
-  },
-  {
-    id: 'snackbox-deluxe-15k',
-    name: 'Paket Snack Box Deluxe (15K)',
-    category: 'snack-box',
-    categoryLabel: 'Paket Snack Box',
-    rating: 5.0,
-    reviewCount: 245,
-    image: '/images/risoles-box-real.jpg',
-    description: 'Pilihan favorit isi 4 item: Lemper Ayam + Risoles Mayo / Pastel + Pie Buah / Kue Sus + Air mineral cup. Kemasan kotak kraft rapi & higienis.',
-    isPopular: true,
-    minOrder: 'Min. 10 box',
-  },
-  {
-    id: 'snackbox-premium-20k',
-    name: 'Paket Snack Box Executive (20K)',
-    category: 'snack-box',
-    categoryLabel: 'Paket Snack Box',
-    rating: 5.0,
-    reviewCount: 180,
-    image: '/images/pie-buah-real.jpg',
-    description: 'Paket istimewa isi 5 item: Lemper Ayam + Sosis Solo + Kue Sus + Pie Buah + Slice Bolu Ketan / Coklat + Air mineral cup + tisu dan sendok mini.',
-    isPopular: true,
-    minOrder: 'Min. 10 box',
-  },
-
   // Kue Gurih & Asin
+  // lemper-ayam: 1 card, gambar dari lemper-pastel-real.jpg
   {
     id: 'lemper-ayam',
     name: 'Lemper Ayam Spesial',
@@ -108,27 +59,6 @@ export const PRODUCTS: Product[] = [
     isPopular: true,
   },
   {
-    id: 'risol-ragout',
-    name: 'Risoles Ragout Ayam Sayur',
-    category: 'kue-gurih',
-    categoryLabel: 'Gurih & Asin',
-    rating: 4.8,
-    reviewCount: 115,
-    image: '/images/risoles-box-real.jpg',
-    description: 'Risoles gurih dengan adonan ragout ayam susu yang lembut lumer di mulut, berpadu potongan wortel manis dan seledri harum.',
-  },
-  {
-    id: 'lumpia-special',
-    name: 'Lumpia Special Homemade',
-    category: 'kue-gurih',
-    categoryLabel: 'Gurih & Asin',
-    rating: 4.9,
-    reviewCount: 135,
-    image: '/images/lumpia-special.jpg',
-    description: 'Kulit lumpia renyah gurih dengan isian daging ayam, rebung/sayuran manis gurih khas homemade, disajikan dengan saus kacang kental dan cabai rawit hijau segar. Tersedia dalam kemasan box kraft elegan.',
-    isPopular: true,
-  },
-  {
     id: 'sosis-solo',
     name: 'Sosis Solo Asli',
     category: 'kue-gurih',
@@ -139,17 +69,9 @@ export const PRODUCTS: Product[] = [
     description: 'Dadar telur tipis lembut menggulung daging ayam giling manis gurih beraroma pala dan ketumbar khas resep tradisional Solo.',
     isPopular: true,
   },
-  {
-    id: 'pastel-renyah',
-    name: 'Pastel Sayur & Ayam Renyah',
-    category: 'kue-gurih',
-    categoryLabel: 'Gurih & Asin',
-    rating: 4.8,
-    reviewCount: 160,
-    image: '/images/lemper-pastel-real.jpg',
-    description: 'Pastel dengan uliran tepi klasik renyah berlapis, diisi bihun gurih, wortel, kentang, suwiran ayam, dan irisan telur rebus.',
-    isPopular: true,
-  },
+
+  // Kue Basah & Manis
+  // tahu-isi: 1 card, gambar dari tahu-isi-crispy.jpg
   {
     id: 'tahu-isi',
     name: 'Tahu Isi Crispy Pedas Gurih',
@@ -157,11 +79,9 @@ export const PRODUCTS: Product[] = [
     categoryLabel: 'Gurih & Asin',
     rating: 4.7,
     reviewCount: 94,
-    image: '/images/poster-tokokuweh.jpg',
+    image: '/images/tahu-isi-crispy.jpg',
     description: 'Tahu goreng berkulit renyah dengan isian sayuran taoge, kol, wortel dengan sentuhan cabai rawit pedas nikmat.',
   },
-
-  // Kue Basah & Manis
   {
     id: 'pie-buah',
     name: 'Pie Buah Segar Premium',
@@ -184,61 +104,8 @@ export const PRODUCTS: Product[] = [
     description: 'Kue sus klasik mekar dengan kulit choux lembut dan isian custard vla vanila melimpah yang manis creamy dan disukai semua usia.',
     isPopular: true,
   },
-  {
-    id: 'bubur-sumsum',
-    name: 'Bubur Sumsum / Cantik Manis Segitiga',
-    category: 'kue-basah',
-    categoryLabel: 'Kue Basah & Manis',
-    rating: 4.9,
-    reviewCount: 155,
-    image: '/images/bubur-sumsum-real.jpg',
-    description: 'Kudapan lembut manis beraroma wangi dengan mutiara sagu merah delima, dikemas rapi bentuk segitiga khas Toko Kuweh.',
-    isPopular: true,
-  },
-  {
-    id: 'dadar-gulung',
-    name: 'Dadar Gulung Pandan Suji',
-    category: 'kue-basah',
-    categoryLabel: 'Kue Basah & Manis',
-    rating: 4.9,
-    reviewCount: 175,
-    image: '/images/lemper-pastel-real.jpg',
-    description: 'Kulit dadar hijau alami dari sari daun pandan dan suji, berisi unti kelapa parut manis legit beraroma gula merah aren pilihan.',
-    isPopular: true,
-  },
-  {
-    id: 'kue-talam',
-    name: 'Kue Lapis & Talam Pandan Gurih',
-    category: 'kue-basah',
-    categoryLabel: 'Kue Basah & Manis',
-    rating: 4.8,
-    reviewCount: 110,
-    image: '/images/poster-tokokuweh.jpg',
-    description: 'Perpaduan seimbang lapisan hijau manis lembut beraroma pandan dengan mahkota lapisan santan kental yang gurih asin legit.',
-    isPopular: true,
-  },
-  {
-    id: 'singkong-pelangi',
-    name: 'Singkong Pelangi Tabur Kelapa',
-    category: 'kue-basah',
-    categoryLabel: 'Kue Basah & Manis',
-    rating: 4.8,
-    reviewCount: 88,
-    image: '/images/poster-tokokuweh.jpg',
-    description: 'Kudapan tradisional dari parutan singkong kenyal warna-warni ceria dengan taburan parutan kelapa muda kukus yang gurih.',
-  },
-  {
-    id: 'serabi-kinca',
-    name: 'Serabi Tradisional Kuah Kinca',
-    category: 'kue-basah',
-    categoryLabel: 'Kue Basah & Manis',
-    rating: 4.9,
-    reviewCount: 125,
-    image: '/images/bolu-cake.jpg',
-    description: 'Serabi empuk berpori harum panggangan wajan tanah liat, dinikmati dengan kuah kinca gula kelapa kental santan gurih.',
-  },
-
   // Bolu & Loyang
+  // bolu-pelangi: 1 card, gambar dari bolu-cake.jpg
   {
     id: 'bolu-pelangi',
     name: 'Bolu Pelangi Kukus Lembut',
@@ -250,26 +117,14 @@ export const PRODUCTS: Product[] = [
     description: 'Bolu kukus warna-warni dengan tekstur sangat empuk, berpori rapat, dan manis pas. Tersedia juga ukuran loyang keluarga dan slice satuan.',
     isPopular: true,
   },
-  {
-    id: 'bolu-coklat',
-    name: 'Bolu Coklat Moist Fudgy',
-    category: 'bolu-tart',
-    categoryLabel: 'Bolu & Loyang',
-    rating: 4.9,
-    reviewCount: 168,
-    image: '/images/bolu-cake.jpg',
-    description: 'Bolu coklat pekat aroma cocoa premium, tekstur lembut lembap (moist) dengan lelehan choco chips di dalamnya.',
-    isPopular: true,
-  },
-  {
-    id: 'bolu-ketan',
-    name: 'Bolu Ketan Hitam Autentik',
-    category: 'bolu-tart',
-    categoryLabel: 'Bolu & Loyang',
-    rating: 4.9,
-    reviewCount: 112,
-    image: '/images/bolu-cake.jpg',
-    description: 'Bolu khas nusantara berbahan tepung ketan hitam asli, manis legit khas ketan dengan wangi santan yang khas dan menggugah selera.',
-    isPopular: true,
-  },
 ];
+
+const normalizeName = (name: string) => name.trim().toLowerCase();
+
+export const PRODUCTS: Product[] = PRODUCT_LIST.filter((product, index, list) => {
+  const name = normalizeName(product.name);
+  const firstByName = list.findIndex((p) => normalizeName(p.name) === name);
+  if (firstByName !== index) return false;
+  const firstById = list.findIndex((p) => p.id === product.id);
+  return firstById === index;
+});

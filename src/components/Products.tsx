@@ -20,7 +20,8 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
 
   const handleCategoryChange = (id: string) => {
     setActiveCategory(id);
-    setCenterIdx(Math.min(1, Math.max(0, (PRODUCTS.filter(p => id === 'semua' ? true : p.category === id).length) - 1)));
+    const count = PRODUCTS.filter((p) => id === 'semua' ? true : p.category === id).length;
+    setCenterIdx((prev) => Math.max(0, Math.min(prev, count - 1)));
   };
 
   const canPrev = centerIdx > 0;
@@ -154,6 +155,11 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
 
         {/* ── Carousel ── */}
         <div className="relative mt-16 sm:mt-0">
+          {filtered.length === 0 && (
+            <div className="text-center py-12 text-[#8A8A7A]">
+              <p>Belum ada produk di kategori ini.</p>
+            </div>
+          )}
           {/* Prev Arrow */}
           <button
             onClick={prev}
@@ -177,15 +183,32 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
               {visibleIndices.map((idx) => {
                 const product = filtered[idx];
                 const isCenter = idx === centerIdx;
-                const cardBg = isCenter ? 'bg-[#C8A96E]' : 'bg-[#0B3D20]';
-                const titleColor = isCenter ? 'text-[#0B3D20]' : 'text-white';
-                const scriptColor = isCenter ? 'text-[#0B3D20]/70' : 'text-[#C8A96E]';
-                const starColor = isCenter ? 'fill-[#0B3D20] text-[#0B3D20]' : 'fill-[#C8A96E] text-[#C8A96E]';
-                const descColor = isCenter ? 'text-[#0B3D20]/75' : 'text-white/70';
+                const isNasiBox = product.category === 'nasi-box';
+                const isGurih = product.category === 'kue-gurih';
+                const isGurihCenter = isGurih && isCenter;
+                const cardBg = isCenter
+                  ? (isNasiBox ? 'bg-[#0B3D20]' : 'bg-[#C8A96E]')
+                  : 'bg-[#0B3D20]';
+                const titleColor = isCenter
+                  ? (isNasiBox ? 'text-white' : 'text-[#0B3D20]')
+                  : 'text-white';
+                const scriptColor = isCenter
+                  ? (isNasiBox ? 'text-[#C8A96E]' : 'text-[#0B3D20]/70')
+                  : 'text-[#C8A96E]';
+                const starColor = isCenter
+                  ? (isNasiBox ? 'fill-[#C8A96E] text-[#C8A96E]' : 'fill-[#0B3D20] text-[#0B3D20]')
+                  : 'fill-[#C8A96E] text-[#C8A96E]';
+                const descColor = isCenter
+                  ? (isNasiBox ? 'text-white/70' : 'text-[#0B3D20]/75')
+                  : 'text-white/70';
                 const btnStyle = isCenter
-                  ? 'bg-[#0B3D20] text-white hover:bg-[#134E2C]'
+                  ? (isNasiBox
+                      ? 'bg-white text-[#0B3D20] hover:bg-[#F5E6C8]'
+                      : 'bg-[#0B3D20] text-white hover:bg-[#134E2C]')
                   : 'bg-white text-[#0B3D20] hover:bg-[#F5E6C8]';
-                const ratingColor = isCenter ? 'text-[#0B3D20]' : 'text-white';
+                const ratingColor = isCenter
+                  ? (isNasiBox ? 'text-white' : 'text-[#0B3D20]')
+                  : 'text-white';
 
                 // On mobile: only show center card to prevent floating image overlap
                 const hiddenOnMobile = !isCenter ? 'hidden sm:block' : 'block';
@@ -200,17 +223,19 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
                     className={`relative ${hiddenOnMobile}`}
                   >
                     {/* Floating image area — overflows above card */}
-                    <div className="absolute -top-16 inset-x-0 flex justify-center z-10 px-6">
-                      <div className="relative w-48 h-36">
-                        <Image
-                          src={product.image}
-                          alt={product.name}
-                          fill
-                          sizes="192px"
-                          className="object-cover rounded-2xl shadow-2xl"
-                        />
+                    {product.image && (
+                      <div className="absolute -top-16 inset-x-0 flex justify-center z-10 px-6">
+                        <div className="relative w-48 h-36">
+                          <Image
+                            src={product.image}
+                            alt={product.name}
+                            fill
+                            sizes="192px"
+                            className="object-cover rounded-2xl shadow-2xl"
+                          />
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Card body */}
                     <div className={`${cardBg} rounded-3xl pt-24 pb-6 px-6 shadow-2xl transition-all duration-300`}>
@@ -244,7 +269,7 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
                         onClick={() => handleOrder(product)}
                         className={`w-full py-3 px-5 rounded-full font-bold text-sm font-sans transition-all hover:scale-[1.02] active:scale-95 shadow-md ${btnStyle}`}
                       >
-                        {product.category === 'nasi-box' ? 'PESAN & CUSTOM NASI BOX' : 'PESAN VIA WA'}
+                        {isNasiBox ? 'PESAN & CUSTOM NASI BOX' : 'PESAN VIA WA'}
                       </button>
                     </div>
                   </motion.div>

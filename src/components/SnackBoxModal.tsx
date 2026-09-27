@@ -48,13 +48,9 @@ const AVAILABLE_KUE = [
   { id: 'lemper', name: 'Lemper Ayam Spesial', type: 'gurih' },
   { id: 'risol-mayo', name: 'Risol Mayo Creamy', type: 'gurih' },
   { id: 'sosis-solo', name: 'Sosis Solo Asli', type: 'gurih' },
-  { id: 'pastel', name: 'Pastel Sayur Renyah', type: 'gurih' },
   { id: 'tahu-isi', name: 'Tahu Isi Crispy', type: 'gurih' },
   { id: 'kue-sus', name: 'Kue Sus Vla Vanila', type: 'manis' },
-  { id: 'dadar-gulung', name: 'Dadar Gulung Pandan', type: 'manis' },
   { id: 'pie-buah', name: 'Pie Buah Segar', type: 'manis' },
-  { id: 'bubur-sumsum', name: 'Bubur Sumsum Segitiga', type: 'manis' },
-  { id: 'kue-talam', name: 'Kue Lapis / Talam Pandan', type: 'manis' },
   { id: 'bolu-ketan', name: 'Slice Bolu Ketan Hitam', type: 'manis' },
   { id: 'bolu-pelangi', name: 'Slice Bolu Pelangi', type: 'manis' },
 ];

@@ -63,7 +63,7 @@ export default function About() {
               <div className="relative aspect-[4/3] lg:aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border-4 border-white">
                 <Image
                   src="/images/lemper-pastel-real.jpg"
-                  alt="Produksi Asli Toko Kuweh - Lemper Ayam, Dadar Gulung, Pastel"
+                  alt="Produksi Asli Toko Kuweh - Lemper Ayam Spesial"
                   fill
                   sizes="(max-width: 1024px) 100vw, 450px"
                   className="object-cover"

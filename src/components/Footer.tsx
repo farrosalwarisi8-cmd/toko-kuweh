@@ -38,7 +38,7 @@ const POPULAR_ITEMS = [
   { name: 'Nasi Box Ayam Suwir' },
   { name: 'Lemper Ayam Spesial' },
   { name: 'Risol Mayo Creamy' },
-  { name: 'Lumpia Special' },
+  { name: 'Pie Buah Segar' },
   { name: 'Kue Sus Vla Vanila' },
 ];
 
