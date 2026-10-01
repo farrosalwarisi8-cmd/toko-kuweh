@@ -18,7 +18,7 @@ export const FAQS: FAQItem[] = [
   {
     id: 'faq-3',
     question: 'Apakah bisa custom isi Paket Snack Box sesuai budget?',
-    answer: 'Sangat bisa! Paket snack box kami mulai dari Rp 10.000 / box. Anda bebas mengombinasikan pilihan kue gurih (Lemper, Risol Mayo, Sosis Solo, Tahu Isi), kue manis (Kue Sus, Pie Buah), slice bolu, hingga minuman kemasan sesuai budget acara Anda.',
+    answer: 'Sangat bisa! Paket snack box kami mulai dari Rp 10.000 / box dengan isian kue gurih dan manis pilihan kami seperti Lemper, Risol, Sosis Solo, Tahu Isi, Kue Sus, dan Pie Buah, plus air cup. Isian disesuaikan dengan paket dan ketersediaan, jadi Anda tinggal memilih paket yang sesuai budget acara.',
   },
   {
     id: 'faq-4',

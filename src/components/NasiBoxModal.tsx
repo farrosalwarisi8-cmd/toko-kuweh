@@ -5,6 +5,12 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check, Sparkles, MessageCircle, AlertCircle, History, UtensilsCrossed } from 'lucide-react';
 import { getWhatsAppLink } from '@/utils/whatsapp';
+import { PRODUCTS } from '@/data/products';
+
+// Pilihan lauk tambahan / custom diambil dari menu gurih & asin
+const LAUK_OPTIONS = PRODUCTS.filter(
+  (product) => product.category === 'kue-gurih'
+).map((product) => product.name);
 
 interface NasiBoxModalProps {
   isOpen: boolean;
@@ -30,7 +36,7 @@ const getMinEventDate = () => {
 
 export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
   const [selectedMenu, setSelectedMenu] = useState(MENU_DEFAULTS[0]);
-  const [customLauk, setCustomLauk] = useState('');
+  const [customLauk, setCustomLauk] = useState<string[]>([]);
   const [boxQuantity, setBoxQuantity] = useState(10);
   const [eventDate, setEventDate] = useState('');
   const [eventNotes, setEventNotes] = useState('');
@@ -41,7 +47,7 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
 
     const applyDefaults = () => {
       setSelectedMenu(MENU_DEFAULTS[0]);
-      setCustomLauk('');
+      setCustomLauk([]);
       setBoxQuantity(10);
       setEventDate('');
       setEventNotes('');
@@ -58,7 +64,13 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
         const draft = JSON.parse(raw);
         const menu = MENU_DEFAULTS.find((m) => m.id === draft?.selectedMenuId) ?? MENU_DEFAULTS[0];
         setSelectedMenu(menu);
-        setCustomLauk(typeof draft?.customLauk === 'string' ? draft.customLauk : '');
+        setCustomLauk(
+          Array.isArray(draft?.customLauk)
+            ? draft.customLauk.filter(
+                (l: unknown) => typeof l === 'string' && LAUK_OPTIONS.includes(l)
+              )
+            : []
+        );
         setBoxQuantity(
           typeof draft?.boxQuantity === 'number' && draft.boxQuantity >= 10
             ? draft.boxQuantity
@@ -67,7 +79,7 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
         setEventDate(typeof draft?.eventDate === 'string' ? draft.eventDate : '');
         setEventNotes(typeof draft?.eventNotes === 'string' ? draft.eventNotes : '');
         const hasContent =
-          (typeof draft?.customLauk === 'string' && draft.customLauk !== '') ||
+          (Array.isArray(draft?.customLauk) && draft.customLauk.length > 0) ||
           draft?.selectedMenuId !== MENU_DEFAULTS[0].id ||
           (typeof draft?.boxQuantity === 'number' && draft.boxQuantity > 10) ||
           (typeof draft?.eventDate === 'string' && draft.eventDate !== '') ||
@@ -137,9 +149,15 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
   const isDateValid = eventDate !== '' && eventDate >= minEventDate;
   const canOrder = isDateValid;
 
+  const toggleLauk = (name: string) => {
+    setCustomLauk((prev) =>
+      prev.includes(name) ? prev.filter((l) => l !== name) : [...prev, name]
+    );
+  };
+
   const handleResetDraft = () => {
     setSelectedMenu(MENU_DEFAULTS[0]);
-    setCustomLauk('');
+    setCustomLauk([]);
     setBoxQuantity(10);
     setEventDate('');
     setEventNotes('');
@@ -152,20 +170,18 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
   };
 
   const handleOrderWA = () => {
-    const menusText = [
-      `   • ${selectedMenu.name}`,
-      customLauk.trim() !== '' ? `   • Lauk tambahan / custom: ${customLauk.trim()}` : '',
-    ]
-      .filter(Boolean)
-      .join('\n');
+    const laukText =
+      customLauk.length > 0
+        ? customLauk.map((l) => `   • ${l}`).join('\n')
+        : '   (Tidak ada lauk tambahan)';
 
     const message = `*FORM PEMESANAN NASI BOX - TOKO KUWEH*
 Halo Admin Toko Kuweh Cikarang, saya ingin memesan Nasi Box:
 
 🍱 *Menu Nasi:* ${selectedMenu.name}
 🔢 *Jumlah Pesanan:* ${boxQuantity} Box
-🧂 *Lauk Isian / Custom:*
-${menusText}
+🧂 *Lauk Tambahan / Custom:*
+${laukText}
 📅 *Tanggal Acara:* ${eventDate || 'Akan dikonfirmasi'}
 📝 *Catatan / Alamat Kirim:* ${eventNotes || 'Area Cikarang / Bekasi'}
 
@@ -305,7 +321,7 @@ Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih
                 </div>
               </div>
 
-              {/* Step 2: Custom Lauk */}
+              {/* Step 2: Pilihan Lauk Tambahan / Custom */}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="font-['Playfair_Display',serif] font-bold text-sm sm:text-base text-[#0B3D20]">
@@ -313,22 +329,32 @@ Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih
                   </label>
                   <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#1E673C]">
                     <UtensilsCrossed className="w-3.5 h-3.5" />
-                    Bisa request lauk di luar menu
+                    Pilih sesuai selera
                   </span>
                 </div>
-                <div className="flex items-center gap-2 rounded-xl border border-gray-300 px-3 py-2 focus-within:ring-2 focus-within:ring-[#C8A96E]">
-                  <UtensilsCrossed className="w-4 h-4 shrink-0 text-[#C8A96E]" />
-                  <input
-                    type="text"
-                    value={customLauk}
-                    onChange={(e) => setCustomLauk(e.target.value)}
-                    placeholder="Contoh: ayam bakar, rendang, sambal goreng kentang, ikan goreng..."
-                    className="w-full text-sm text-gray-800 focus:outline-none bg-transparent"
-                  />
+                <div className="flex flex-wrap gap-2">
+                  {LAUK_OPTIONS.map((lauk) => {
+                    const isPicked = customLauk.includes(lauk);
+                    return (
+                      <button
+                        key={lauk}
+                        type="button"
+                        onClick={() => toggleLauk(lauk)}
+                        className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border text-xs font-semibold transition-all ${
+                          isPicked
+                            ? 'bg-[#0B3D20] text-[#F5E6C8] border-[#0B3D20] shadow-sm'
+                            : 'bg-white text-gray-700 border-[#E8E4DC] hover:border-[#C8A96E]'
+                        }`}
+                      >
+                        {isPicked && <Check className="w-3.5 h-3.5 text-[#C8A96E]" />}
+                        {lauk}
+                      </button>
+                    );
+                  })}
                 </div>
-                <p className="text-[11px] text-gray-500 mt-1.5 flex items-center gap-1">
+                <p className="text-[11px] text-gray-500 mt-2 flex items-center gap-1">
                   <AlertCircle className="w-3.5 h-3.5" />
-                  Kosongkan jika cukup dengan menu nasi box standar di atas.
+                  Lewati jika cukup dengan menu nasi box standar di atas.
                 </p>
               </div>
 
@@ -388,8 +414,8 @@ Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih
                   <p className="text-xs text-gray-600">Pesanan ({boxQuantity} Box):</p>
                   <p className="text-sm font-bold text-[#0B3D20]">
                     {selectedMenu.name}
-                    {customLauk.trim() !== '' && (
-                      <span className="text-[#C8A96E]"> + custom lauk</span>
+                    {customLauk.length > 0 && (
+                      <span className="text-[#C8A96E]"> + {customLauk.length} lauk tambahan</span>
                     )}
                   </p>
                   <p className="text-[11px] text-gray-500">

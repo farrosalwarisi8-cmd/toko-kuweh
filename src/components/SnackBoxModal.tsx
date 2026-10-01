@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Check, Sparkles, MessageCircle, AlertCircle, History } from 'lucide-react';
+import { X, Sparkles, MessageCircle, History } from 'lucide-react';
 import { formatRupiah, getWhatsAppLink } from '@/utils/whatsapp';
 
 interface SnackBoxModalProps {
@@ -44,20 +44,9 @@ const TIERS = [
   },
 ];
 
-const AVAILABLE_KUE = [
-  { id: 'lemper', name: 'Lemper Ayam Spesial', type: 'gurih' },
-  { id: 'risol-mayo', name: 'Risol Mayo Creamy', type: 'gurih' },
-  { id: 'sosis-solo', name: 'Sosis Solo Asli', type: 'gurih' },
-  { id: 'tahu-isi', name: 'Tahu Isi Crispy', type: 'gurih' },
-  { id: 'kue-sus', name: 'Kue Sus Vla Vanila', type: 'manis' },
-  { id: 'pie-buah', name: 'Pie Buah Segar', type: 'manis' },
-  { id: 'bolu-ketan', name: 'Slice Bolu Ketan Hitam', type: 'manis' },
-  { id: 'bolu-pelangi', name: 'Slice Bolu Pelangi', type: 'manis' },
-];
-
 const DRAFT_KEY = 'toko-kuweh-snackbox-draft';
 
-// Tanggal minimal H-2 (2 hari dari hari ini), format YYYY-MM-DD waktu lokal
+// Tanggal minimal H-2 (2 hari dari hari ini), format YYYY-MM-DD
 const getMinEventDate = () => {
   const d = new Date();
   d.setDate(d.getDate() + 2);
@@ -69,11 +58,9 @@ const getMinEventDate = () => {
 
 export default function SnackBoxModal({ isOpen, onClose }: SnackBoxModalProps) {
   const [selectedTier, setSelectedTier] = useState(TIERS[0]);
-  const [selectedKue, setSelectedKue] = useState<string[]>([]);
   const [boxQuantity, setBoxQuantity] = useState(selectedTier.minBox);
   const [eventDate, setEventDate] = useState('');
   const [eventNotes, setEventNotes] = useState('');
-  const [letShopChoose, setLetShopChoose] = useState(false);
   const [isDraftRestored, setIsDraftRestored] = useState(false);
 
   // Muat draf tersimpan saat modal dibuka; tanpa draf, mulai dari kondisi awal
@@ -82,11 +69,9 @@ export default function SnackBoxModal({ isOpen, onClose }: SnackBoxModalProps) {
 
     const applyDefaults = () => {
       setSelectedTier(TIERS[0]);
-      setSelectedKue([]);
       setBoxQuantity(TIERS[0].minBox);
       setEventDate('');
       setEventNotes('');
-      setLetShopChoose(false);
       setIsDraftRestored(false);
     };
 
@@ -100,13 +85,6 @@ export default function SnackBoxModal({ isOpen, onClose }: SnackBoxModalProps) {
         const draft = JSON.parse(raw);
         const tier = TIERS.find((t) => t.id === draft?.selectedTierId) ?? TIERS[0];
         setSelectedTier(tier);
-        setSelectedKue(
-          Array.isArray(draft?.selectedKue)
-            ? draft.selectedKue
-                .filter((k: unknown) => AVAILABLE_KUE.some((a) => a.name === k))
-                .slice(0, tier.itemsAllowed)
-            : []
-        );
         setBoxQuantity(
           typeof draft?.boxQuantity === 'number' && draft.boxQuantity >= tier.minBox
             ? draft.boxQuantity
@@ -114,15 +92,12 @@ export default function SnackBoxModal({ isOpen, onClose }: SnackBoxModalProps) {
         );
         setEventDate(typeof draft?.eventDate === 'string' ? draft.eventDate : '');
         setEventNotes(typeof draft?.eventNotes === 'string' ? draft.eventNotes : '');
-        setLetShopChoose(draft?.letShopChoose === true);
         // Anggap sebagai draf hanya jika ada isian yang sudah diubah dari default
         const hasContent =
-          (Array.isArray(draft?.selectedKue) && draft.selectedKue.length > 0) ||
           draft?.selectedTierId !== TIERS[0].id ||
           (typeof draft?.boxQuantity === 'number' && draft.boxQuantity > TIERS[0].minBox) ||
           (typeof draft?.eventDate === 'string' && draft.eventDate !== '') ||
-          (typeof draft?.eventNotes === 'string' && draft.eventNotes !== '') ||
-          draft?.letShopChoose === true;
+          (typeof draft?.eventNotes === 'string' && draft.eventNotes !== '');
         setIsDraftRestored(hasContent);
       } catch {
         applyDefaults();
@@ -137,18 +112,16 @@ export default function SnackBoxModal({ isOpen, onClose }: SnackBoxModalProps) {
     if (!isOpen) return;
     const draft = {
       selectedTierId: selectedTier.id,
-      selectedKue,
       boxQuantity,
       eventDate,
       eventNotes,
-      letShopChoose,
     };
     try {
       window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
     } catch {
       // abaikan jika storage tidak tersedia
     }
-  }, [isOpen, selectedTier, selectedKue, boxQuantity, eventDate, eventNotes, letShopChoose]);
+  }, [isOpen, selectedTier, boxQuantity, eventDate, eventNotes]);
 
   // Tutup modal saat tombol back ditekan di HP.
   // Pola: saat modal dibuka, dorong satu entry history dengan penanda.
@@ -190,25 +163,10 @@ export default function SnackBoxModal({ isOpen, onClose }: SnackBoxModalProps) {
     }
   };
 
-  const toggleKue = (name: string) => {
-    setLetShopChoose(false);
-    if (selectedKue.includes(name)) {
-      setSelectedKue(selectedKue.filter((item) => item !== name));
-    } else {
-      if (selectedKue.length < selectedTier.itemsAllowed) {
-        setSelectedKue([...selectedKue, name]);
-      }
-    }
-  };
-
   const handleSelectTier = (tier: typeof TIERS[0]) => {
     setSelectedTier(tier);
     if (boxQuantity < tier.minBox) {
       setBoxQuantity(tier.minBox);
-    }
-    // Trim selected if exceeds new allowance
-    if (selectedKue.length > tier.itemsAllowed) {
-      setSelectedKue(selectedKue.slice(0, tier.itemsAllowed));
     }
   };
 
@@ -216,18 +174,13 @@ export default function SnackBoxModal({ isOpen, onClose }: SnackBoxModalProps) {
 
   const minEventDate = getMinEventDate();
   const isDateValid = eventDate !== '' && eventDate >= minEventDate;
-
-  const allKueSelected = selectedKue.length === selectedTier.itemsAllowed;
-  const kueComplete = allKueSelected || letShopChoose;
-  const canOrder = kueComplete && isDateValid;
+  const canOrder = isDateValid;
 
   const handleResetDraft = () => {
     setSelectedTier(TIERS[0]);
-    setSelectedKue([]);
     setBoxQuantity(TIERS[0].minBox);
     setEventDate('');
     setEventNotes('');
-    setLetShopChoose(false);
     setIsDraftRestored(false);
     try {
       window.localStorage.removeItem(DRAFT_KEY);
@@ -237,10 +190,6 @@ export default function SnackBoxModal({ isOpen, onClose }: SnackBoxModalProps) {
   };
 
   const handleOrderWA = () => {
-    const kueListText = letShopChoose
-      ? '   (Diserahkan ke rekomendasi Toko Kuweh)'
-      : selectedKue.map((k, i) => `   ${i + 1}. ${k}`).join('\n');
-
     const message = `*FORM PEMESANAN PAKET SNACK BOX - TOKO KUWEH*
 Halo Admin Toko Kuweh Cikarang, saya ingin memesan Paket Snack Box:
 
@@ -248,9 +197,7 @@ Halo Admin Toko Kuweh Cikarang, saya ingin memesan Paket Snack Box:
 🔢 *Jumlah Pesanan:* ${boxQuantity} Box
 💰 *Estimasi Total:* ${formatRupiah(totalPrice)}
 
-🍰 *Pilihan Isian Kue:*
-${kueListText}
-🥤 *Tambahan:* Air Mineral Cup (Gratis dalam paket)
+🍰 *Isian Paket:* Pilih ${selectedTier.itemsAllowed} kue + Air Mineral Cup (sesuai paket & ketersediaan)
 
 📅 *Tanggal Acara:* ${eventDate || 'Akan dikonfirmasi'}
 📝 *Catatan / Alamat Kirim:* ${eventNotes || 'Area Cikarang / Bekasi'}
@@ -347,10 +294,10 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                     <span>Custom Order Spesial Acara</span>
                   </div>
                   <h3 className="font-['Playfair_Display',serif] text-xl sm:text-2xl font-bold text-white">
-                    Builder Paket Snack Box Toko Kuweh
+                    Bundle Paket Snack Box Toko Kuweh
                   </h3>
                   <p className="text-white/80 text-xs mt-0.5">
-                    Pilih paket mulai 10 rb, sesuaikan kombinasi kue favorit, dan pesan instan via WhatsApp!
+                    Pilih paket mulai 10 rb, isi kue sesuai paket, dan pesan instan via WhatsApp!
                   </p>
                 </div>
               </div>
@@ -396,96 +343,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                 </div>
               </div>
 
-              {/* Step 2: Pilih Isian Kue */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="font-['Playfair_Display',serif] font-bold text-sm sm:text-base text-[#0B3D20]">
-                    2. Pilih {selectedTier.itemsAllowed} Varian Kue Isian:
-                  </label>
-                  <motion.span
-                    key={letShopChoose ? 'toko' : selectedKue.length}
-                    initial={{ scale: 1.12, opacity: 0.6 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-[#134E2C]/10 text-[#0B3D20]"
-                  >
-                    {letShopChoose
-                      ? 'Dipilihkan Toko'
-                      : `${selectedKue.length} / ${selectedTier.itemsAllowed} Dipilih`}
-                  </motion.span>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                  {AVAILABLE_KUE.map((kue) => {
-                    const isPicked = selectedKue.includes(kue.name);
-                    return (
-                      <motion.button
-                        key={kue.id}
-                        type="button"
-                        onClick={() => toggleKue(kue.name)}
-                        whileTap={{ scale: 0.97 }}
-                        animate={{ scale: isPicked ? [0.96, 1.04, 1] : 1 }}
-                        transition={{ duration: 0.3, ease: 'easeOut' }}
-                        className={`flex items-center justify-between p-2.5 rounded-xl border text-left text-xs font-medium transition-colors ${
-                          isPicked
-                            ? 'bg-[#0B3D20] text-[#F5E6C8] border-[#0B3D20] shadow-sm'
-                            : 'bg-white text-gray-700 border-[#E8E4DC] hover:border-[#C8A96E]'
-                        }`}
-                      >
-                        <span className="truncate pr-1">{kue.name}</span>
-                        {isPicked ? (
-                          <motion.span
-                            initial={{ scale: 0, rotate: -20 }}
-                            animate={{ scale: 1, rotate: 0 }}
-                            transition={{ type: 'spring', stiffness: 500, damping: 18 }}
-                            className="flex shrink-0"
-                          >
-                            <Check className="w-4 h-4 text-[#C8A96E]" />
-                          </motion.span>
-                        ) : (
-                          <motion.span
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.2 }}
-                            className="text-[10px] text-gray-400 uppercase shrink-0"
-                          >
-                            {kue.type}
-                          </motion.span>
-                        )}
-                      </motion.button>
-                    );
-                  })}
-                </div>
-
-                {/* Opsi cepat: serahkan pilihan ke toko */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    const next = !letShopChoose;
-                    setLetShopChoose(next);
-                    if (next) setSelectedKue([]);
-                  }}
-                  className={`w-full mt-3 flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 border-dashed text-xs font-semibold transition-all ${
-                    letShopChoose
-                      ? 'border-[#C8A96E] bg-[#C8A96E]/10 text-[#0B3D20]'
-                      : 'border-[#E8E4DC] text-gray-600 hover:border-[#C8A96E] hover:text-[#0B3D20]'
-                  }`}
-                >
-                  <Sparkles className={`w-4 h-4 ${letShopChoose ? 'text-[#C8A96E]' : 'text-gray-400'}`} />
-                  {letShopChoose
-                    ? 'Isian akan dipilihkan oleh Toko Kuweh ✓'
-                    : 'Serahkan pilihan ke rekomendasi Toko Kuweh'}
-                </button>
-
-                {!letShopChoose && selectedKue.length < selectedTier.itemsAllowed && (
-                  <p className="text-[11px] text-amber-700 flex items-center gap-1 mt-2">
-                    <AlertCircle className="w-3.5 h-3.5" />
-                    Silakan pilih {selectedTier.itemsAllowed - selectedKue.length} kue lagi untuk melengkapi paket.
-                  </p>
-                )}
-              </div>
-
-              {/* Step 3: Jumlah Box & Tanggal */}
+              {/* Step 2: Jumlah Box & Tanggal */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-gray-100">
                 <div>
                   <label className="block text-xs font-bold text-[#0B3D20] mb-1">
@@ -564,7 +422,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                   <span className="relative inline-block">
                     <AnimatePresence mode="wait" initial={false}>
                       <motion.span
-                        key={canOrder ? 'ready' : !kueComplete ? `kue-${selectedTier.itemsAllowed - selectedKue.length}` : 'tanggal'}
+                        key={canOrder ? 'ready' : 'tanggal'}
                         initial={{ opacity: 0, y: 6 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -6 }}
@@ -573,9 +431,7 @@ Mohon informasi ketersediaan slot dan instruksi pembayaran. Terima kasih!`;
                       >
                         {canOrder
                           ? 'Kirim Pesanan ke WhatsApp'
-                          : !kueComplete
-                            ? `Pilih ${selectedTier.itemsAllowed - selectedKue.length} kue lagi`
-                            : 'Pilih tanggal acara (min. 2 hari dari sekarang)'}
+                          : 'Pilih tanggal acara (min. 2 hari dari sekarang)'}
                       </motion.span>
                     </AnimatePresence>
                   </span>
