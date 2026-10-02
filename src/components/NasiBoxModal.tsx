@@ -21,6 +21,7 @@ const MENU_DEFAULTS = [
   { id: 'ayam-suwir-dadar', name: 'Ayam Suwir + Telur Dadar', desc: 'Lauk ayam suwir + telur dadar' },
   { id: 'ayam-suwir-ceplok', name: 'Ayam Suwir + Telur Ceplok', desc: 'Lauk ayam suwir + telur ceplok' },
   { id: 'ayam-suwir-lengkap', name: 'Ayam Suwir + Dadar & Ceplok', desc: 'Lauk ayam suwir + telur dadar & ceplok' },
+  { id: 'custom', name: 'Custom', desc: 'Tentukan menu nasi box sesuai kebutuhan' },
 ];
 
 const DRAFT_KEY = 'toko-kuweh-nasibox-draft';
@@ -39,6 +40,9 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
   const [customLauk, setCustomLauk] = useState<string[]>([]);
   const [boxQuantity, setBoxQuantity] = useState(10);
   const [eventDate, setEventDate] = useState('');
+  const [buyerAddress, setBuyerAddress] = useState('');
+  const [eventPurpose, setEventPurpose] = useState('');
+  const [customMenuNotes, setCustomMenuNotes] = useState('');
   const [eventNotes, setEventNotes] = useState('');
   const [isDraftRestored, setIsDraftRestored] = useState(false);
 
@@ -50,6 +54,9 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
       setCustomLauk([]);
       setBoxQuantity(10);
       setEventDate('');
+      setBuyerAddress('');
+      setEventPurpose('');
+      setCustomMenuNotes('');
       setEventNotes('');
       setIsDraftRestored(false);
     };
@@ -77,12 +84,18 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
             : 10
         );
         setEventDate(typeof draft?.eventDate === 'string' ? draft.eventDate : '');
+        setBuyerAddress(typeof draft?.buyerAddress === 'string' ? draft.buyerAddress : '');
+        setEventPurpose(typeof draft?.eventPurpose === 'string' ? draft.eventPurpose : '');
+        setCustomMenuNotes(typeof draft?.customMenuNotes === 'string' ? draft.customMenuNotes : '');
         setEventNotes(typeof draft?.eventNotes === 'string' ? draft.eventNotes : '');
         const hasContent =
           (Array.isArray(draft?.customLauk) && draft.customLauk.length > 0) ||
           draft?.selectedMenuId !== MENU_DEFAULTS[0].id ||
           (typeof draft?.boxQuantity === 'number' && draft.boxQuantity > 10) ||
           (typeof draft?.eventDate === 'string' && draft.eventDate !== '') ||
+          (typeof draft?.buyerAddress === 'string' && draft.buyerAddress !== '') ||
+          (typeof draft?.eventPurpose === 'string' && draft.eventPurpose !== '') ||
+          (typeof draft?.customMenuNotes === 'string' && draft.customMenuNotes !== '') ||
           (typeof draft?.eventNotes === 'string' && draft.eventNotes !== '');
         setIsDraftRestored(hasContent);
       } catch {
@@ -100,6 +113,9 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
       customLauk,
       boxQuantity,
       eventDate,
+      buyerAddress,
+      eventPurpose,
+      customMenuNotes,
       eventNotes,
     };
     try {
@@ -107,7 +123,7 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
     } catch {
       // abaikan jika storage tidak tersedia
     }
-  }, [isOpen, selectedMenu, customLauk, boxQuantity, eventDate, eventNotes]);
+  }, [isOpen, selectedMenu, customLauk, boxQuantity, eventDate, buyerAddress, eventPurpose, customMenuNotes, eventNotes]);
 
   const ignoreNextPopState = useRef(false);
   const onCloseRef = useRef(onClose);
@@ -147,7 +163,8 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
 
   const minEventDate = getMinEventDate();
   const isDateValid = eventDate !== '' && eventDate >= minEventDate;
-  const canOrder = isDateValid;
+  const areOrderDetailsValid = buyerAddress.trim() !== '' && eventPurpose.trim() !== '';
+  const canOrder = isDateValid && areOrderDetailsValid;
 
   const toggleLauk = (name: string) => {
     setCustomLauk((prev) =>
@@ -160,6 +177,9 @@ export default function NasiBoxModal({ isOpen, onClose }: NasiBoxModalProps) {
     setCustomLauk([]);
     setBoxQuantity(10);
     setEventDate('');
+    setBuyerAddress('');
+    setEventPurpose('');
+    setCustomMenuNotes('');
     setEventNotes('');
     setIsDraftRestored(false);
     try {
@@ -183,7 +203,9 @@ Halo Admin Toko Kuweh Cikarang, saya ingin memesan Nasi Box:
 🧂 *Lauk Tambahan / Custom:*
 ${laukText}
 📅 *Tanggal Acara:* ${eventDate || 'Akan dikonfirmasi'}
-📝 *Catatan / Alamat Kirim:* ${eventNotes || 'Area Cikarang / Bekasi'}
+🎉 *Kebutuhan Acara:* ${eventPurpose}
+📍 *Alamat Pengiriman:* ${buyerAddress}
+${selectedMenu.id === 'custom' ? `✍️ *Rincian Menu Custom:* ${customMenuNotes || 'Akan dikonfirmasi'}\n` : ''}📝 *Catatan Tambahan:* ${eventNotes || '-'}
 
 Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih!`;
 
@@ -292,7 +314,7 @@ Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih
                 <label className="block font-['Playfair_Display',serif] font-bold text-sm sm:text-base text-[#0B3D20] mb-2.5">
                   1. Pilih Menu Nasi Box:
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {MENU_DEFAULTS.map((menu) => {
                     const isSelected = selectedMenu.id === menu.id;
                     return (
@@ -319,13 +341,28 @@ Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih
                     );
                   })}
                 </div>
+                {selectedMenu.id === 'custom' && (
+                  <div className="mt-3">
+                    <label htmlFor="custom-menu-notes" className="block text-xs font-bold text-[#0B3D20] mb-1">
+                      Rincian Menu Custom:
+                    </label>
+                    <textarea
+                      id="custom-menu-notes"
+                      rows={2}
+                      value={customMenuNotes}
+                      onChange={(e) => setCustomMenuNotes(e.target.value)}
+                      placeholder="Contoh: nasi kuning, ayam bakar, dan sambal terpisah"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-xl text-xs text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#C8A96E]"
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Step 2: Pilihan Lauk Tambahan / Custom */}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="font-['Playfair_Display',serif] font-bold text-sm sm:text-base text-[#0B3D20]">
-                    2. Lauk Tambahan / Custom:
+                    2. Lauk Tambahan (Opsional):
                   </label>
                   <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#1E673C]">
                     <UtensilsCrossed className="w-3.5 h-3.5" />
@@ -354,7 +391,7 @@ Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih
                 </div>
                 <p className="text-[11px] text-gray-500 mt-2 flex items-center gap-1">
                   <AlertCircle className="w-3.5 h-3.5" />
-                  Lewati jika cukup dengan menu nasi box standar di atas.
+                  Pilih jika ingin menambahkan snack gurih ke pesanan.
                 </p>
               </div>
 
@@ -396,16 +433,48 @@ Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#0B3D20] mb-1">
-                  Catatan Tambahan / Alamat Pengiriman di Cikarang:
+                <label htmlFor="buyer-address" className="block text-xs font-bold text-[#0B3D20] mb-1">
+                  Alamat Pengiriman <span className="text-red-600">*</span>
                 </label>
                 <textarea
+                  id="buyer-address"
                   rows={2}
-                  value={eventNotes}
-                  onChange={(e) => setEventNotes(e.target.value)}
-                  placeholder="Contoh: Kirim ke Lippo Cikarang jam 08:30 pagi untuk acara rapat direksi."
+                  required
+                  value={buyerAddress}
+                  onChange={(e) => setBuyerAddress(e.target.value)}
+                  placeholder="Alamat lengkap penerima dan patokan lokasi"
                   className="w-full px-3 py-2 border border-gray-300 rounded-xl text-xs text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#C8A96E]"
                 />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="event-purpose" className="block text-xs font-bold text-[#0B3D20] mb-1">
+                    Kebutuhan Acara <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    id="event-purpose"
+                    type="text"
+                    required
+                    value={eventPurpose}
+                    onChange={(e) => setEventPurpose(e.target.value)}
+                    placeholder="Contoh: pernikahan, rapat, syukuran"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-xs text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#C8A96E]"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="event-notes" className="block text-xs font-bold text-[#0B3D20] mb-1">
+                    Catatan Tambahan (Opsional):
+                  </label>
+                  <textarea
+                    id="event-notes"
+                    rows={2}
+                    value={eventNotes}
+                    onChange={(e) => setEventNotes(e.target.value)}
+                    placeholder="Contoh: pengiriman pukul 08.30 pagi"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-xs text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#C8A96E]"
+                  />
+                </div>
               </div>
 
               {/* Submit Card */}
@@ -448,7 +517,7 @@ Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih
                         className="block whitespace-nowrap"
                       >
                         {isDateValid
-                          ? 'Kirim Pesanan ke WhatsApp'
+                          ? (areOrderDetailsValid ? 'Kirim Pesanan ke WhatsApp' : 'Isi alamat dan kebutuhan acara')
                           : 'Pilih tanggal acara (min. 2 hari dari sekarang)'}
                       </motion.span>
                     </AnimatePresence>

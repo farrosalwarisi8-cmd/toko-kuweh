@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { MapPin, Clock, Phone, ExternalLink, Navigation, CheckCircle2 } from 'lucide-react';
 import { WA_NUMBERS, getWhatsAppLink } from '@/utils/whatsapp';
 
@@ -36,20 +37,33 @@ export default function Location() {
             className="w-full min-h-[350px] lg:min-h-[480px] rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl border-4 border-white relative bg-gray-200"
           >
             <iframe
-              src="https://www.google.com/maps?q=Vila+Mutiara+Cikarang+2+Sukasejati+Cikarang+Selatan&output=embed"
+              src="https://www.google.com/maps?q=-6.3394513,107.0976944&z=17&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0, minHeight: '350px' }}
               allowFullScreen={true}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Peta Lokasi Toko Kuweh Vila Mutiara Cikarang 2"
+              title="Peta Titik Lokasi Toko Kuweh sesuai Google Maps"
               className="w-full h-full"
             />
+
+            <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-full flex-col items-center">
+              <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-white bg-white shadow-lg">
+                <Image
+                  src="/images/logo.jpg"
+                  alt="Logo Toko Kuweh sebagai penanda lokasi"
+                  fill
+                  sizes="48px"
+                  className="object-cover"
+                />
+              </div>
+              <span className="-mt-1 h-3 w-3 rotate-45 border-b-2 border-r-2 border-white bg-white shadow-md" />
+            </div>
             
             <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-md flex items-center gap-2 text-xs font-semibold text-[#0B3D20]">
               <MapPin className="w-3.5 h-3.5 text-[#1E673C]" />
-              <span>Vila Mutiara Cikarang 2</span>
+              <span>Titik Lokasi Toko Kuweh</span>
             </div>
           </motion.div>
 
@@ -69,16 +83,15 @@ export default function Location() {
                 </div>
                 <div>
                   <h3 className="font-['Playfair_Display',serif] text-base font-bold text-[#0B3D20] mb-1">
-                    Alamat Lengkap Toko
+                    Titik Lokasi Toko Kuweh
                   </h3>
                   <p className="text-xs sm:text-sm text-[#4A4A4A] leading-relaxed">
-                    <strong>Vila Mutiara Cikarang 2</strong><br />
-                    Blok B2 No. 30, Sukasejati,<br />
-                    Kec. Cikarang Selatan, Kab. Bekasi, Jawa Barat
+                    <strong>Koordinat Google Maps</strong><br />
+                    -6.3394513, 107.0976944
                   </p>
                   <p className="text-[11px] text-[#8A8A7A] mt-1 flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3 text-[#1E673C]" />
-                    Tersedia akses parkir &amp; pickup pesanan
+                    Mengikuti titik lokasi yang dibagikan
                   </p>
                 </div>
               </div>
