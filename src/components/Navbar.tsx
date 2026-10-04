@@ -55,7 +55,7 @@ export default function Navbar({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }: 
                   width={36}
                   height={36}
                   className="w-full h-full object-contain"
-                  priority
+                  preload
                 />
               </div>
               <div className="flex flex-col leading-none">

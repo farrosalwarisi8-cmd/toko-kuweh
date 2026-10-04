@@ -63,7 +63,8 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                   src="/images/lumpia-special.jpg"
                   alt="Lumpia Special Homemade - Toko Kuweh"
                   fill
-                  priority
+                  preload
+                  quality={60}
                   sizes="(max-width: 768px) 100vw, 560px"
                   className="object-cover"
                 />
@@ -90,6 +91,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                     src="/images/risoles-box-real.jpg"
                     alt="Risoles Box Toko Kuweh"
                     fill
+                    quality={60}
                     sizes="200px"
                     className="object-cover hover:scale-105 transition-transform duration-500"
                   />
@@ -108,6 +110,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                     src="/images/pie-buah-real.jpg"
                     alt="Pie Buah Segar Toko Kuweh"
                     fill
+                    quality={60}
                     sizes="200px"
                     className="object-cover hover:scale-105 transition-transform duration-500"
                   />

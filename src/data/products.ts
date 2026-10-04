@@ -74,7 +74,7 @@ const PRODUCT_LIST: Product[] = [
     categoryLabel: 'Gurih & Asin',
     rating: 4.9,
     reviewCount: 220,
-    image: '/images/lemper-pastel-real.jpg',
+    image: '/images/lemper.jpeg',
     description: 'Ketan pulen gurih santan kelapa murni, diisi suwiran daging ayam berbumbu rempah gurih wangi melimpah, dibungkus daun pisang alami.',
     isPopular: true,
   },
@@ -161,7 +161,7 @@ const PRODUCT_LIST: Product[] = [
     categoryLabel: 'Kue Basah & Manis',
     rating: 4.9,
     reviewCount: 165,
-    image: '/images/susBuah.png',
+    image: '/images/susBuah.jpg',
     description: 'Kue sus mekar segar berisi vla susu creamy dan potongan buah segar. Berbeda dari Pie Buah karena kuihnya lebih ringan dan isiannya buah langsung.',
   },
   {

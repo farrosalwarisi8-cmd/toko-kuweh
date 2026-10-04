@@ -197,7 +197,7 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
                             src={product.image}
                             alt={product.name}
                             fill
-                            priority
+                            quality={60}
                             sizes="(max-width: 640px) 88vw, 448px"
                             className="object-cover"
                           />
