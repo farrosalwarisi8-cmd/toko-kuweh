@@ -14,28 +14,23 @@ interface ProductsProps {
 
 export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }: ProductsProps) {
   const [activeCategory, setActiveCategory] = useState<string>('semua');
-  const [centerIdx, setCenterIdx] = useState(1);
+  const [currentIdx, setCurrentIdx] = useState(0);
 
+  // 1 produk = 1 slide. Tidak ada produk yang muncul dua kali.
   const filtered = activeCategory === 'semua' ? PRODUCTS : PRODUCTS.filter((p) => p.category === activeCategory);
 
   const handleCategoryChange = (id: string) => {
     setActiveCategory(id);
-    const count = PRODUCTS.filter((p) => id === 'semua' ? true : p.category === id).length;
-    setCenterIdx((prev) => Math.max(0, Math.min(prev, count - 1)));
+    setCurrentIdx(0);
   };
 
-  const canPrev = centerIdx > 0;
-  const canNext = centerIdx < filtered.length - 1;
+  const canPrev = currentIdx > 0;
+  const canNext = currentIdx < filtered.length - 1;
 
-  const prev = () => canPrev && setCenterIdx((i) => i - 1);
-  const next = () => canNext && setCenterIdx((i) => i + 1);
+  const prev = () => canPrev && setCurrentIdx((i) => Math.max(0, i - 1));
+  const next = () => canNext && setCurrentIdx((i) => Math.min(filtered.length - 1, i + 1));
 
-  // Get visible window: [center-1, center, center+1] clamped
-  const visibleIndices: number[] = [];
-  for (let offset = -1; offset <= 1; offset++) {
-    const idx = centerIdx + offset;
-    if (idx >= 0 && idx < filtered.length) visibleIndices.push(idx);
-  }
+  const product = filtered[currentIdx];
 
   const handleOrder = (product: Product) => {
     if (product.category === 'nasi-box') {
@@ -45,6 +40,17 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
     const msg = `Halo Toko Kuweh Cikarang, saya ingin memesan:\n🍰 *Produk:* ${product.name}\n\nBolehkah saya tahu ketersediaan dan minimal pemesanan? Terima kasih.`;
     window.open(getWhatsAppLink(msg), '_blank');
   };
+
+  // Warna kartu mengikuti kategori produk yang sedang tampil
+  const isNasiBox = product?.category === 'nasi-box';
+  const titleColor = isNasiBox ? 'text-white' : 'text-[#0B3D20]';
+  const scriptColor = isNasiBox ? 'text-[#C8A96E]' : 'text-[#0B3D20]/70';
+  const starColor = isNasiBox ? 'fill-[#C8A96E] text-[#C8A96E]' : 'fill-[#0B3D20] text-[#0B3D20]';
+  const descColor = isNasiBox ? 'text-white/70' : 'text-[#0B3D20]/75';
+  const ratingColor = isNasiBox ? 'text-white' : 'text-[#0B3D20]';
+  const btnStyle = isNasiBox
+    ? 'bg-white text-[#0B3D20] hover:bg-[#F5E6C8]'
+    : 'bg-[#0B3D20] text-white hover:bg-[#134E2C]';
 
   return (
     <section id="produk" className="relative bg-white pt-8 pb-28 overflow-hidden">
@@ -153,157 +159,126 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
           })}
         </div>
 
-        {/* ── Carousel ── */}
-        <div className="relative mt-16 sm:mt-0">
-          {filtered.length === 0 && (
+        {/* ── Carousel: 1 produk per slide ── */}
+        <div className="relative mt-10 sm:mt-0">
+          {!product && (
             <div className="text-center py-12 text-[#8A8A7A]">
               <p>Belum ada produk di kategori ini.</p>
             </div>
           )}
-          {/* Prev Arrow */}
-          <button
-            onClick={prev}
-            disabled={!canPrev}
-            aria-label="Produk sebelumnya"
-            className="absolute left-0 top-1/2 -translate-y-8 -translate-x-3 sm:-translate-x-5 z-20 w-11 h-11 rounded-full bg-white shadow-xl border border-gray-100 flex items-center justify-center hover:bg-[#F5E6C8] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-          >
-            <ChevronLeft className="w-5 h-5 text-[#0B3D20]" />
-          </button>
 
-          {/* Cards grid — with top padding to accommodate the floating image */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCategory + '-' + centerIdx}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 pt-20"
-            >
-              {visibleIndices.map((idx) => {
-                const product = filtered[idx];
-                const isCenter = idx === centerIdx;
-                const isNasiBox = product.category === 'nasi-box';
-                const isGurih = product.category === 'kue-gurih';
-                const isGurihCenter = isGurih && isCenter;
-                const cardBg = isCenter
-                  ? (isNasiBox ? 'bg-[#0B3D20]' : 'bg-[#C8A96E]')
-                  : 'bg-[#0B3D20]';
-                const titleColor = isCenter
-                  ? (isNasiBox ? 'text-white' : 'text-[#0B3D20]')
-                  : 'text-white';
-                const scriptColor = isCenter
-                  ? (isNasiBox ? 'text-[#C8A96E]' : 'text-[#0B3D20]/70')
-                  : 'text-[#C8A96E]';
-                const starColor = isCenter
-                  ? (isNasiBox ? 'fill-[#C8A96E] text-[#C8A96E]' : 'fill-[#0B3D20] text-[#0B3D20]')
-                  : 'fill-[#C8A96E] text-[#C8A96E]';
-                const descColor = isCenter
-                  ? (isNasiBox ? 'text-white/70' : 'text-[#0B3D20]/75')
-                  : 'text-white/70';
-                const btnStyle = isCenter
-                  ? (isNasiBox
-                      ? 'bg-white text-[#0B3D20] hover:bg-[#F5E6C8]'
-                      : 'bg-[#0B3D20] text-white hover:bg-[#134E2C]')
-                  : 'bg-white text-[#0B3D20] hover:bg-[#F5E6C8]';
-                const ratingColor = isCenter
-                  ? (isNasiBox ? 'text-white' : 'text-[#0B3D20]')
-                  : 'text-white';
+          {product && (
+            <>
+              {/* Prev Arrow */}
+              <button
+                onClick={prev}
+                disabled={!canPrev}
+                aria-label="Produk sebelumnya"
+                className="absolute left-0 sm:left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-xl border border-gray-100 flex items-center justify-center hover:bg-[#F5E6C8] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                <ChevronLeft className="w-5 h-5 text-[#0B3D20]" />
+              </button>
 
-                // On mobile: only show center card to prevent floating image overlap
-                const hiddenOnMobile = !isCenter ? 'hidden sm:block' : 'block';
-
-                return (
+              <div className="px-12 sm:px-20">
+                <AnimatePresence mode="wait">
                   <motion.div
-                    key={product.id}
-                    layout
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: 0.05 }}
-                    className={`relative ${hiddenOnMobile}`}
+                    key={activeCategory + '-' + product.id}
+                    initial={{ opacity: 0, x: 32 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -32 }}
+                    transition={{ duration: 0.28 }}
+                    className="max-w-md mx-auto"
                   >
-                    {/* Floating image area — overflows above card */}
-                    {product.image && (
-                      <div className="absolute -top-16 inset-x-0 flex justify-center z-10 px-6">
-                        <div className="relative w-48 h-36">
+                    <article className={`${isNasiBox ? 'bg-[#0B3D20]' : 'bg-[#C8A96E]'} rounded-3xl shadow-2xl overflow-hidden`}>
+                      {/* Foto produk — 1 produk 1 foto */}
+                      {product.image && (
+                        <div className="relative w-full aspect-[16/11] bg-white/20">
                           <Image
                             src={product.image}
                             alt={product.name}
                             fill
-                            sizes="192px"
-                            className="object-cover rounded-2xl shadow-2xl"
+                            priority
+                            sizes="(max-width: 640px) 88vw, 448px"
+                            className="object-cover"
                           />
                         </div>
-                      </div>
-                    )}
+                      )}
 
-                    {/* Card body */}
-                    <div className={`${cardBg} rounded-3xl pt-24 pb-6 px-6 shadow-2xl transition-all duration-300`}>
-                      {/* Script category */}
-                      <span className={`font-['Great_Vibes',cursive] text-2xl block mb-0.5 ${scriptColor}`}>
-                        {product.categoryLabel}
-                      </span>
-
-                      {/* Product name */}
-                      <h3 className={`font-['Playfair_Display',serif] text-2xl font-black mb-3 leading-tight ${titleColor}`}>
-                        {product.name}
-                      </h3>
-
-                      {/* Stars + rating */}
-                      <div className="flex items-center gap-1 mb-3">
-                        {[1, 2, 3, 4, 5].map((s) => (
-                          <Star key={s} className={`w-4 h-4 ${s <= Math.round(product.rating) ? starColor : 'text-white/30'}`} />
-                        ))}
-                        <span className={`text-sm font-bold ml-1 font-sans ${ratingColor}`}>
-                          {product.rating.toFixed(1)}
+                      <div className="px-6 sm:px-8 pb-7 pt-5">
+                        <span className={`font-['Great_Vibes',cursive] text-2xl block mb-0.5 ${scriptColor}`}>
+                          {product.categoryLabel}
                         </span>
+
+                        <h3 className={`font-['Playfair_Display',serif] text-2xl sm:text-3xl font-black mb-2 leading-tight ${titleColor}`}>
+                          {product.name}
+                        </h3>
+
+                        <div className="flex items-center gap-1 mb-3">
+                          {[1, 2, 3, 4, 5].map((s) => (
+                            <Star key={s} className={`w-4 h-4 ${s <= Math.round(product.rating) ? starColor : 'text-white/30'}`} />
+                          ))}
+                          <span className={`text-sm font-bold ml-1 font-sans ${ratingColor}`}>
+                            {product.rating.toFixed(1)}
+                          </span>
+                          {product.reviewCount > 0 && (
+                            <span className={`text-xs ml-1 font-sans ${descColor}`}>({product.reviewCount} ulasan)</span>
+                          )}
+                        </div>
+
+                        {product.minOrder && (
+                          <p className={`text-xs font-bold mb-2 font-sans ${ratingColor}`}>{product.minOrder}</p>
+                        )}
+
+                        <p className={`text-xs sm:text-sm leading-relaxed mb-6 font-sans ${descColor}`}>
+                          {product.description}
+                        </p>
+
+                        <button
+                          onClick={() => handleOrder(product)}
+                          className={`w-full py-3 px-5 rounded-full font-bold text-sm font-sans transition-all hover:scale-[1.02] active:scale-95 shadow-md ${btnStyle}`}
+                        >
+                          {isNasiBox ? 'PESAN & CUSTOM NASI BOX' : 'PESAN VIA WA'}
+                        </button>
                       </div>
-
-                      {/* Description */}
-                      <p className={`text-xs sm:text-sm leading-relaxed mb-6 line-clamp-3 font-sans ${descColor}`}>
-                        {product.description}
-                      </p>
-
-                      {/* CTA Button */}
-                      <button
-                        onClick={() => handleOrder(product)}
-                        className={`w-full py-3 px-5 rounded-full font-bold text-sm font-sans transition-all hover:scale-[1.02] active:scale-95 shadow-md ${btnStyle}`}
-                      >
-                        {isNasiBox ? 'PESAN & CUSTOM NASI BOX' : 'PESAN VIA WA'}
-                      </button>
-                    </div>
+                    </article>
                   </motion.div>
-                );
-              })}
-            </motion.div>
-          </AnimatePresence>
+                </AnimatePresence>
+              </div>
 
-          {/* Next Arrow */}
-          <button
-            onClick={next}
-            disabled={!canNext}
-            aria-label="Produk berikutnya"
-            className="absolute right-0 top-1/2 -translate-y-8 translate-x-3 sm:translate-x-5 z-20 w-11 h-11 rounded-full bg-white shadow-xl border border-gray-100 flex items-center justify-center hover:bg-[#F5E6C8] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-          >
-            <ChevronRight className="w-5 h-5 text-[#0B3D20]" />
-          </button>
+              {/* Next Arrow */}
+              <button
+                onClick={next}
+                disabled={!canNext}
+                aria-label="Produk berikutnya"
+                className="absolute right-0 sm:right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-xl border border-gray-100 flex items-center justify-center hover:bg-[#F5E6C8] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                <ChevronRight className="w-5 h-5 text-[#0B3D20]" />
+              </button>
+            </>
+          )}
         </div>
 
-        {/* Carousel dots */}
+        {/* Carousel dots + counter */}
         {filtered.length > 1 && (
-          <div className="flex justify-center gap-2 mt-10">
-            {filtered.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCenterIdx(idx)}
-                aria-label={`Produk ${idx + 1}`}
-                className={`rounded-full transition-all duration-300 ${
-                  idx === centerIdx
-                    ? 'w-6 h-2.5 bg-[#0B3D20]'
-                    : 'w-2.5 h-2.5 bg-gray-200 hover:bg-[#C8A96E]'
-                }`}
-              />
-            ))}
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <p className="text-xs font-semibold text-[#8A8A7A] font-sans tracking-wide">
+              Produk {currentIdx + 1} dari {filtered.length}
+            </p>
+            <div className="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto">
+              {filtered.map((p, idx) => (
+                <button
+                  key={p.id}
+                  onClick={() => setCurrentIdx(idx)}
+                  aria-label={`Produk ${idx + 1}: ${p.name}`}
+                  aria-current={idx === currentIdx}
+                  className={`rounded-full transition-all duration-300 ${
+                    idx === currentIdx
+                      ? 'w-6 h-2.5 bg-[#0B3D20]'
+                      : 'w-2.5 h-2.5 bg-gray-200 hover:bg-[#C8A96E]'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         )}
 

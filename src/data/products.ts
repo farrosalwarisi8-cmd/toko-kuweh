@@ -20,8 +20,7 @@ export const CATEGORIES = [
 ] as const;
 
 const PRODUCT_LIST: Product[] = [
-  // Nasi Box
-  // nasi-box-ayam-telur: 1 card, gambar dari nasi kotak.jpeg
+  // ── Nasi Box ──
   {
     id: 'nasi-box-ayam-telur',
     name: 'Nasi Box Ayam Suwir & Telur',
@@ -35,16 +34,17 @@ const PRODUCT_LIST: Product[] = [
     minOrder: 'Min. 10 box',
   },
 
-  // Kue Gurih & Asin
+  // ── Gurih & Asin ──
   {
-    id: 'eggroll',
-    name: 'Eggroll',
+    id: 'risol-mayo',
+    name: 'Risol Mayo',
     category: 'kue-gurih',
     categoryLabel: 'Gurih & Asin',
-    rating: 4.8,
-    reviewCount: 120,
-    image: '/images/lumpia-sosis-real.jpg',
-    description: 'Eggroll goreng kering dengan kulit renyah di luar dan isian ayam suwir bumbu gurih wangi di dalam. Cocok untuk snack, hampers, dan pelengkap acara.',
+    rating: 4.9,
+    reviewCount: 173,
+    image: '/images/risol-mayo.jpg',
+    description: 'Risol isi ayam suwir dengan mayones creamy yang lembut dan gurih, dibungkus kulit panir emas yang renyah.',
+    isPopular: true,
   },
   {
     id: 'risol',
@@ -79,34 +79,24 @@ const PRODUCT_LIST: Product[] = [
     isPopular: true,
   },
   {
-    id: 'karipap',
-    name: 'Karipap',
-    category: 'kue-gurih',
-    categoryLabel: 'Gurih & Asin',
-    rating: 4.7,
-    reviewCount: 88,
-    image: '/images/hero-platter.jpg',
-    description: 'Karipap isi ayam kari gurih dengan kulit pastry renyah lapis, garing dan lumer di mulut.',
-  },
-  {
     id: 'pastel',
     name: 'Pastel',
     category: 'kue-gurih',
     categoryLabel: 'Gurih & Asin',
     rating: 4.8,
     reviewCount: 132,
-    image: '/images/lemper-pastel-real.jpg',
+    image: '/images/pastel.jpg',
     description: 'Pastel goreng kering isian ayam suwir, wortel, dan tauge bumbu gurih, dengan kulit tipis yang renyah.',
   },
   {
-    id: 'lontong-ayam',
-    name: 'Lontong Ayam',
+    id: 'lontong-isi',
+    name: 'Lontong Isi',
     category: 'kue-gurih',
     categoryLabel: 'Gurih & Asin',
     rating: 4.9,
     reviewCount: 154,
-    image: '/images/nasi-box.jpeg',
-    description: 'Lontong padat hangat dengan ayam suwir bumbu gurih, kuah kental, telur, dan taburan bawang goreng.',
+    image: '/images/lontongIsi.jpg',
+    description: 'Lontong padat berisi ayam suwir, telur, dan taoge goreng dengan kuah kental gurih serta taburan bawang goreng.',
     isPopular: true,
   },
   {
@@ -116,8 +106,29 @@ const PRODUCT_LIST: Product[] = [
     categoryLabel: 'Gurih & Asin',
     rating: 4.7,
     reviewCount: 96,
-    image: '/images/tahu-isi-crispy.jpg',
+    image: '/images/bakwan.jpg',
     description: 'Bakwan sayuran goreng renyah dengan isian kol, wortel, dan tauge segar bumbu gurih wangi.',
+  },
+  {
+    id: 'tahu-isi',
+    name: 'Tahu Isi',
+    category: 'kue-gurih',
+    categoryLabel: 'Gurih & Asin',
+    rating: 4.8,
+    reviewCount: 110,
+    image: '/images/tahu-isi.jpg',
+    description: 'Tahu goreng renyah dengan isian taoge, kol, dan wortel bumbu gurih.',
+    isPopular: true,
+  },
+  {
+    id: 'martabak',
+    name: 'Martabak',
+    category: 'kue-gurih',
+    categoryLabel: 'Gurih & Asin',
+    rating: 4.8,
+    reviewCount: 102,
+    image: '/images/martabak.jpg',
+    description: 'Martabak gurih renyah dengan isian ayam cincang bumbu, disajikan dengan saus kacang dan acar segar.',
   },
   {
     id: 'sosis-solo',
@@ -130,29 +141,8 @@ const PRODUCT_LIST: Product[] = [
     description: 'Dadar telur tipis lembut menggulung sosis ayam giling manis gurih beraroma pala dan ketumbar khas resep tradisional Solo.',
     isPopular: true,
   },
-  {
-    id: 'tahu-isi',
-    name: 'Tahu Isi',
-    category: 'kue-gurih',
-    categoryLabel: 'Gurih & Asin',
-    rating: 4.8,
-    reviewCount: 110,
-    image: '/images/tahu-isi-crispy.jpg',
-    description: 'Tahu goreng berkulit renyah dengan isian sayuran taoge, kol, dan wortel bumbu gurih nikmat.',
-    isPopular: true,
-  },
-  {
-    id: 'martabak',
-    name: 'Martabak',
-    category: 'kue-gurih',
-    categoryLabel: 'Gurih & Asin',
-    rating: 4.8,
-    reviewCount: 102,
-    image: '/images/snack-box.jpg',
-    description: 'Martabak gurih renyah dengan isian ayam cincang bumbu, disajikan dengan saus kacang dan acar segar.',
-  },
 
-  // Kue Basah & Manis
+  // ── Kue Basah & Manis ──
   {
     id: 'sus-vla',
     name: 'Sus Vla',
@@ -171,8 +161,8 @@ const PRODUCT_LIST: Product[] = [
     categoryLabel: 'Kue Basah & Manis',
     rating: 4.9,
     reviewCount: 165,
-    image: '/images/hero-platter.jpg',
-    description: 'Kue sus mekar segar berisi vla susu creamy dan potongan buah segar manis yang menyegarkan.',
+    image: '/images/susBuah.png',
+    description: 'Kue sus mekar segar berisi vla susu creamy dan potongan buah segar. Berbeda dari Pie Buah karena kuihnya lebih ringan dan isiannya buah langsung.',
   },
   {
     id: 'pie-buah',
@@ -192,7 +182,7 @@ const PRODUCT_LIST: Product[] = [
     categoryLabel: 'Kue Basah & Manis',
     rating: 4.8,
     reviewCount: 140,
-    image: '/images/hero-platter.jpg',
+    image: '/images/dadar-gulung.jpg',
     description: 'Dadar gulung hijau pandan lembut dengan isian kelapa parut manis gurih wangi gula aren.',
   },
   {
@@ -202,7 +192,7 @@ const PRODUCT_LIST: Product[] = [
     categoryLabel: 'Kue Basah & Manis',
     rating: 4.9,
     reviewCount: 118,
-    image: '/images/bolu-cake.jpg',
+    image: '/images/lapis.jpg',
     description: 'Kue lapis legit tradisional dengan lapisan santan dan gula aren yang lembut dan legit.',
   },
   {
@@ -212,7 +202,7 @@ const PRODUCT_LIST: Product[] = [
     categoryLabel: 'Kue Basah & Manis',
     rating: 4.8,
     reviewCount: 97,
-    image: '/images/lemper-pastel-real.jpg',
+    image: '/images/bugis.jpg',
     description: 'Kue bugis ketan lembut berisi kelapa parut manis gurih khas Bugis, kenyal dan menggugah selera.',
   },
   {
@@ -222,12 +212,41 @@ const PRODUCT_LIST: Product[] = [
     categoryLabel: 'Kue Basah & Manis',
     rating: 4.9,
     reviewCount: 126,
-    image: '/images/bubur-sumsum-real.jpg',
+    image: '/images/ketan-srikaya.jpg',
     description: 'Ketan pulen berkuah santan dengan vla srikaya kuning manis gurih khas, tekstur lembut dan wangi.',
   },
+  {
+    id: 'serabi',
+    name: 'Serabi',
+    category: 'kue-basah',
+    categoryLabel: 'Kue Basah & Manis',
+    rating: 4.8,
+    reviewCount: 108,
+    image: '/images/serabi.jpg',
+    description: 'Serabi panggang di atas wajan dengan permukaan kecokelatan mengilap, dibuat dari santan gurih beraroma pandan.',
+  },
+  {
+    id: 'kue-nona-manis',
+    name: 'Kue Nona Manis',
+    category: 'kue-basah',
+    categoryLabel: 'Kue Basah & Manis',
+    rating: 4.8,
+    reviewCount: 92,
+    image: '/images/kue-nona-manis.jpg',
+    description: 'Kue Nona Manis yang lembut bertopping kelapa parut dan gula aren, manis legit wangi dan lumer di mulut.',
+  },
+  {
+    id: 'kue-cente-manis',
+    name: 'Kue Cente Manis',
+    category: 'kue-basah',
+    categoryLabel: 'Kue Basah & Manis',
+    rating: 4.8,
+    reviewCount: 84,
+    image: '/images/kue-cente-manis.jpg',
+    description: 'Kue cente bertekstur kenyal lembut dengan sirup gula aren yang lumer dan rasa manis legit yang khas.',
+  },
 
-  // Bolu & Loyang
-  // bolu-pelangi: 1 card, gambar dari bolu-cake.jpg
+  // ── Bolu & Loyang ──
   {
     id: 'bolu-pelangi',
     name: 'Bolu Pelangi',
@@ -235,7 +254,7 @@ const PRODUCT_LIST: Product[] = [
     categoryLabel: 'Bolu & Loyang',
     rating: 4.9,
     reviewCount: 104,
-    image: '/images/bolu-cake.jpg',
+    image: '/images/bolu-pelangi.jpg',
     description: 'Bolu kukus warna-warni dengan tekstur sangat empuk, berpori rapat, dan manis pas. Tersedia juga ukuran loyang keluarga dan slice satuan.',
     isPopular: true,
   },
@@ -243,6 +262,7 @@ const PRODUCT_LIST: Product[] = [
 
 const normalizeName = (name: string) => name.trim().toLowerCase();
 
+// Jaring pengaman: pastikan tidak ada produk dengan nama/id sama muncul dua kali.
 export const PRODUCTS: Product[] = PRODUCT_LIST.filter((product, index, list) => {
   const name = normalizeName(product.name);
   const firstByName = list.findIndex((p) => normalizeName(p.name) === name);
