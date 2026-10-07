@@ -21,9 +21,9 @@ const MENU_DEFAULTS = [
   { id: 'ayam-suwir-dadar', name: 'Ayam Suwir + Telur Dadar', desc: 'Lauk ayam suwir + telur dadar' },
   { id: 'ayam-suwir-ceplok', name: 'Ayam Suwir + Telur Ceplok', desc: 'Lauk ayam suwir + telur ceplok' },
   { id: 'ayam-suwir-lengkap', name: 'Ayam Suwir + Dadar & Ceplok', desc: 'Lauk ayam suwir + telur dadar & ceplok' },
-  { id: 'ayam-bakar', name: 'Ayam Bakar', desc: 'Lauk ayam bakar bumbu kecap manis' },
-  { id: 'ayam', name: 'Ayam Goreng', desc: 'Lauk ayam goreng bumbu gurih' },
-  { id: 'rice-bowl-ayam', name: 'Rice Bowl Isi Ayam', desc: 'Nasi dengan topping ayam pilihan' },
+  { id: 'ayam-bakar', name: 'Ayam Bakar', desc: 'Lauk ayam bakar bumbu kecap manis', image: '/images/ayam%20bakar%20(1).jpeg' },
+  { id: 'ayam', name: 'Ayam Chiken', desc: 'Lauk ayam chiken bumbu gurih', image: '/images/ayam%20chiken.jpeg' },
+  { id: 'rice-bowl-ayam', name: 'Rice Bowl Isi Ayam', desc: 'Nasi dengan topping ayam pilihan', image: '/images/rice%20bowl.jpeg' },
   { id: 'custom', name: 'Custom', desc: 'Tentukan menu nasi box sesuai kebutuhan' },
 ];
 
@@ -331,10 +331,19 @@ Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih
                             : 'border-[#E8E4DC] hover:border-gray-300 bg-white'
                         }`}
                       >
+                        {menu.image && (
+                          <div className="relative w-full aspect-[16/9] mb-2 overflow-hidden rounded-xl bg-[#F7F3ED]">
+                            <Image
+                              src={menu.image}
+                              alt={menu.name}
+                              fill
+                              sizes="(max-width: 640px) 90vw, 280px"
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
                         <h4 className="font-bold text-sm text-[#0B3D20]">{menu.name}</h4>
-                        <p className="text-[11px] text-gray-600 leading-tight mt-1">
-                          {menu.desc}
-                        </p>
+                        <p className="text-[11px] text-gray-600 leading-tight mt-1">{menu.desc}</p>
                         {isSelected && (
                           <span className="absolute top-2 right-2 w-5 h-5 rounded-full bg-[#C8A96E] text-white flex items-center justify-center">
                             <Check className="w-3 h-3" />
