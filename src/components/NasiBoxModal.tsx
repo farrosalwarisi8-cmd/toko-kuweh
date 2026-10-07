@@ -21,6 +21,9 @@ const MENU_DEFAULTS = [
   { id: 'ayam-suwir-dadar', name: 'Ayam Suwir + Telur Dadar', desc: 'Lauk ayam suwir + telur dadar' },
   { id: 'ayam-suwir-ceplok', name: 'Ayam Suwir + Telur Ceplok', desc: 'Lauk ayam suwir + telur ceplok' },
   { id: 'ayam-suwir-lengkap', name: 'Ayam Suwir + Dadar & Ceplok', desc: 'Lauk ayam suwir + telur dadar & ceplok' },
+  { id: 'ayam-bakar', name: 'Ayam Bakar', desc: 'Lauk ayam bakar bumbu kecap manis' },
+  { id: 'ayam', name: 'Ayam Goreng', desc: 'Lauk ayam goreng bumbu gurih' },
+  { id: 'rice-bowl-ayam', name: 'Rice Bowl Isi Ayam', desc: 'Nasi dengan topping ayam pilihan' },
   { id: 'custom', name: 'Custom', desc: 'Tentukan menu nasi box sesuai kebutuhan' },
 ];
 
