@@ -1,5 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Great_Vibes, Inter } from "next/font/google";
+import { SITE } from "@/data/site";
+import { getStructuredData } from "@/utils/seo";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -22,29 +24,61 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tokokuweh.com'),
-  title: "Toko Kuweh - Toko Kue & Snack Box Premium Cikarang Selatan",
-  description: "Toko Kuweh menyajikan aneka kue basah tradisional, jajanan gurih, bolu, dan paket snack box mulai Rp 10.000 di Cikarang Selatan, Bekasi. Pesan mudah via WhatsApp!",
-  keywords: [
-    "toko kue cikarang",
-    "snack box cikarang",
-    "toko kuweh",
-    "kue basah cikarang selatan",
-    "lemper ayam cikarang",
-    "risol mayo cikarang",
-    "kue kotak bekasi",
-    "vila mutiara cikarang 2"
-  ],
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: SITE.title,
+    template: `%s | ${SITE.name}`,
+  },
+  description: SITE.description,
+  keywords: [...SITE.keywords],
+  applicationName: SITE.name,
+  authors: [{ name: SITE.name, url: SITE.url }],
+  creator: SITE.name,
+  publisher: SITE.name,
+  category: SITE.category,
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title: "Toko Kuweh - Kue Premium & Snack Box Cikarang Selatan",
-    description: "Dibuat dengan perhatian, disajikan dengan kualitas. Pilihan kue dan jajanan terbaik untuk setiap momen istimewa Anda.",
-    images: ["/images/hero-platter.jpg"],
     type: "website",
+    locale: SITE.locale,
+    url: SITE.url,
+    siteName: SITE.name,
+    title: SITE.title,
+    description: SITE.description,
+    images: [
+      {
+        url: "/images/hero-platter.jpg",
+        width: 1200,
+        height: 896,
+        alt: "Aneka kue dan snack box Toko Kuweh, toko kue di Cikarang Selatan",
+      },
+    ],
   },
-  icons: {
-    icon: '/images/logo.jpg',
-    apple: '/images/logo.jpg',
+  twitter: {
+    card: "summary_large_image",
+    title: SITE.title,
+    description: SITE.description,
+    images: ["/images/hero-platter.jpg"],
   },
+  // Ikon (favicon, icon, apple-icon) diambil otomatis dari
+  // src/app/favicon.ico, src/app/icon.png, dan src/app/apple-icon.png.
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0B3D20",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -52,10 +86,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const structuredData = getStructuredData();
+
   return (
     <html lang="id" className={`${playfair.variable} ${greatVibes.variable} ${inter.variable} scroll-smooth`}>
       <body className="antialiased min-h-screen flex flex-col bg-[#FDFBF7] text-[#4A4A4A]">
         {children}
+        <script
+          type="application/ld+json"
+          // JSON-LD aman disisipkan di sini: dibuat dari data internal, bukan input pengguna.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       </body>
     </html>
   );

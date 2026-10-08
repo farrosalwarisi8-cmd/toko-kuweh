@@ -94,7 +94,7 @@ export default function About() {
           >
             <div className="space-y-4 text-sm sm:text-base text-[#4A4A4A] leading-relaxed mb-8">
               <p>
-                <strong className="text-[#0B3D20] font-semibold">Toko Kuweh</strong> adalah usaha kuliner yang berbasis di{' '}
+                <strong className="text-[#0B3D20] font-semibold">Toko Kuweh</strong> adalah toko kue rumahan yang berbasis di{' '}
                 <span className="text-[#1E673C] font-semibold underline decoration-[#C8A96E] underline-offset-4">
                   Cikarang Selatan, Bekasi
                 </span>

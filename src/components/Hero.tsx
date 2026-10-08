@@ -61,7 +61,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
               >
                 <Image
                   src="/images/lumpia-special.jpg"
-                  alt="Lumpia Special Homemade - Toko Kuweh"
+                  alt="Lumpia special homemade dari Toko Kuweh, toko kue di Cikarang Selatan"
                   fill
                   preload
                   quality={60}
@@ -177,6 +177,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
             >
               <h1 className="font-['Playfair_Display',serif] text-6xl sm:text-7xl lg:text-8xl font-black text-[#0B3D20] leading-none tracking-tight">
                 Snack Box
+                <span className="sr-only"> - Toko Kue Cikarang Selatan, Bekasi</span>
               </h1>
               {/* Circular price badge */}
               <div className="absolute -top-6 -right-6 sm:-right-10 w-[72px] h-[72px] bg-[#0B3D20] rounded-full flex flex-col items-center justify-center text-white shadow-xl z-10 border-4 border-[#F8F4EE]">
@@ -206,7 +207,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
               className="bg-white rounded-2xl p-5 shadow-sm border border-[#E8E4DC] mb-6 text-left"
             >
               <p className="text-[#4A4A4A] text-sm leading-relaxed font-sans">
-                Kue basah tradisional dan modern berkualitas untuk setiap momen istimewa Anda. Dibuat{' '}
+                Toko kue Cikarang Selatan dengan kue basah tradisional dan modern berkualitas untuk setiap momen istimewa Anda. Dibuat{' '}
                 <strong className="text-[#0B3D20]">fresh setiap hari</strong> dengan bahan alami pilihan — tanpa pengawet. Melayani kantor di kawasan industri Cikarang, arisan, syukuran, dan hampers.
               </p>
             </motion.div>

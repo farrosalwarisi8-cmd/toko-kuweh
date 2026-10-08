@@ -31,6 +31,7 @@ const NAV_LINKS = [
   { label: 'Nasi Box', href: '#nasibox' },
   { label: 'Paket Snack Box', href: '#snackbox' },
   { label: 'Peta Lokasi', href: '#lokasi' },
+  { label: 'Area Layanan', href: '#area-layanan' },
   { label: 'FAQ', href: '#faq' },
 ];
 
@@ -66,7 +67,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-14 h-14 rounded-2xl bg-[#0B3D20] p-1.5 shadow-md overflow-hidden flex items-center justify-center">
-                <Image src="/images/logo.jpg" alt="Logo Toko Kuweh" width={52} height={52} className="w-full h-full object-contain" />
+                <Image src="/images/logo.jpg" alt="Logo Toko Kuweh, toko kue di Cikarang Selatan" width={52} height={52} className="w-full h-full object-contain" />
               </div>
               <div>
                 <span className="font-['Playfair_Display',serif] text-xl font-bold text-[#0B3D20] block leading-none">Toko Kuweh</span>
@@ -75,7 +76,7 @@ export default function Footer() {
             </div>
 
             <p className="text-[#4A4A4A] text-xs sm:text-sm leading-relaxed max-w-xs font-sans">
-              Menghadirkan aneka kue basah tradisional, jajanan gurih, bolu, dan paket snack box berkualitas di Cikarang Selatan, Bekasi.
+              Toko kue di Cikarang Selatan, Bekasi yang menghadirkan aneka kue basah tradisional, jajanan gurih, bolu, nasi box, dan paket snack box berkualitas.
             </p>
 
             <p className="text-xs text-[#8A8A7A] italic font-sans">

@@ -6,6 +6,7 @@ import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Products from '@/components/Products';
 import Location from '@/components/Location';
+import ServiceArea from '@/components/ServiceArea';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
 import SnackBoxModal from '@/components/SnackBoxModal';
@@ -42,6 +43,7 @@ export default function Home() {
         <About />
         <Products onOpenSnackBoxBuilder={handleOpenSnackBox} onOpenNasiBoxBuilder={handleOpenNasiBox} />
         <Location />
+        <ServiceArea />
         <FAQ />
       </main>
 

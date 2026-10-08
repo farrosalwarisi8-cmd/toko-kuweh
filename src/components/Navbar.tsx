@@ -51,7 +51,7 @@ export default function Navbar({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }: 
               <div className="w-10 h-10 rounded-xl bg-[#0B3D20] p-1 overflow-hidden flex items-center justify-center shadow-sm">
                 <Image
                   src="/images/logo.jpg"
-                  alt="Logo Toko Kuweh"
+                  alt="Logo Toko Kuweh - toko kue & snack box Cikarang"
                   width={36}
                   height={36}
                   className="w-full h-full object-contain"
