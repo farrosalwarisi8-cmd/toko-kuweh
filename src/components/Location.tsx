@@ -1,6 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { MapPin, Clock, Phone, ExternalLink, Navigation, CheckCircle2 } from 'lucide-react';
 import { WA_NUMBERS, getWhatsAppLink } from '@/utils/whatsapp';
@@ -11,7 +8,7 @@ export default function Location() {
   return (
     <section id="lokasi" className="py-16 lg:py-24 bg-[#F7F3ED] relative">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
           <span className="font-['Great_Vibes',cursive] text-[#1E673C] text-2xl lg:text-3xl block mb-2">
@@ -27,15 +24,9 @@ export default function Location() {
 
         {/* Layout Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 items-stretch">
-          
+
           {/* Map Container */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="w-full min-h-[350px] lg:min-h-[480px] rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl border-4 border-white relative bg-gray-200"
-          >
+          <div className="w-full min-h-[350px] lg:min-h-[480px] rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl border-4 border-white relative bg-gray-200">
             <iframe
               src="https://www.google.com/maps?q=-6.3394513,107.0976944&z=17&output=embed"
               width="100%"
@@ -60,21 +51,15 @@ export default function Location() {
               </div>
               <span className="-mt-1 h-3 w-3 rotate-45 border-b-2 border-r-2 border-white bg-white shadow-md" />
             </div>
-            
+
             <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-md flex items-center gap-2 text-xs font-semibold text-[#0B3D20]">
               <MapPin className="w-3.5 h-3.5 text-[#1E673C]" />
               <span>Titik Lokasi Toko Kuweh</span>
             </div>
-          </motion.div>
+          </div>
 
           {/* Info Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="bg-white rounded-2xl lg:rounded-3xl p-6 sm:p-8 shadow-xl border border-[#E8E4DC] flex flex-col justify-between"
-          >
+          <div className="bg-white rounded-2xl lg:rounded-3xl p-6 sm:p-8 shadow-xl border border-[#E8E4DC] flex flex-col justify-between">
             <div className="space-y-6">
               {/* Alamat */}
               <div className="flex items-start gap-4">
@@ -89,7 +74,7 @@ export default function Location() {
                     <strong>Koordinat Google Maps</strong><br />
                     -6.3394513, 107.0976944
                   </p>
-                  <p className="text-[11px] text-[#8A8A7A] mt-1 flex items-center gap-1">
+                  <p className="text-[11px] text-[#6B6B5C] mt-1 flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3 text-[#1E673C]" />
                     Mengikuti titik lokasi yang dibagikan
                   </p>
@@ -117,7 +102,7 @@ export default function Location() {
                       <strong className="text-[#0B3D20]">07:00 - 18:00 WIB</strong>
                     </div>
                   </div>
-                  <p className="text-[11px] text-[#8A8A7A] mt-1.5">
+                  <p className="text-[11px] text-[#6B6B5C] mt-1.5">
                     *Kue subuh &amp; snack box pagi disiapkan mulai jam 05:30 WIB
                   </p>
                 </div>
@@ -144,7 +129,7 @@ export default function Location() {
                         className="flex items-center justify-between p-2.5 rounded-xl bg-[#FDFBF7] hover:bg-[#F5E6C8]/50 border border-[#E8E4DC] text-xs font-semibold text-[#0B3D20] transition-colors"
                       >
                         <span>{contact.display}</span>
-                        <span className="text-[10px] text-[#1E673C] font-bold">Chat WA →</span>
+                        <span className="text-[#1E673C] font-bold">Chat WA →</span>
                       </a>
                     ))}
                   </div>
@@ -165,7 +150,7 @@ export default function Location() {
                 <ExternalLink className="w-3.5 h-3.5 text-white/60" />
               </a>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>

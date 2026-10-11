@@ -4,20 +4,15 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Star, ShoppingBag, ChevronRight, ShieldCheck } from 'lucide-react';
 import { getWhatsAppLink } from '@/utils/whatsapp';
+import { useModal } from '@/components/ModalProvider';
 
-interface HeroProps {
-  onOpenSnackBoxBuilder?: () => void;
-}
+export default function Hero() {
+  const { openSnackBox } = useModal();
+  const handleOpenSnackBox = openSnackBox;
 
-export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
   const waLink = getWhatsAppLink(
     'Halo Toko Kuweh, saya ingin memesan kue/snack box untuk acara saya!'
   );
-
-  const fadeUp = {
-    initial: { opacity: 0, y: 24 },
-    animate: { opacity: 1, y: 0 },
-  };
 
   return (
     <section
@@ -39,12 +34,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center min-h-[80vh]">
 
           {/* ── Left: Photo Collage ── */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.85, ease: 'easeOut' }}
-            className="relative order-2 lg:order-1 flex items-center justify-center"
-          >
+          <div className="relative order-2 lg:order-1 flex items-center justify-center">
             {/* Outer glow */}
             <div className="absolute inset-0 bg-gradient-to-tr from-[#C8A96E]/15 via-transparent to-[#1E673C]/10 rounded-[40px] blur-2xl" />
 
@@ -52,10 +42,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
             <div className="relative w-full max-w-md lg:max-w-none">
 
               {/* Large main image — lumpia special (user's own photo) */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.94 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
+              <div
                 className="relative w-full aspect-[4/3] rounded-[28px] overflow-hidden shadow-2xl border-4 border-white"
                 style={{ filter: 'drop-shadow(0 20px 48px rgba(11,61,32,0.16))' }}
               >
@@ -64,6 +51,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                   alt="Lumpia special homemade dari Toko Kuweh, toko kue di Cikarang Selatan"
                   fill
                   preload
+                  fetchPriority="high"
                   quality={60}
                   sizes="(max-width: 768px) 100vw, 560px"
                   className="object-cover"
@@ -74,19 +62,14 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                 {/* Label overlay */}
                 <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-2xl px-4 py-2.5 shadow-md">
                   <p className="font-['Great_Vibes',cursive] text-[#1E673C] text-xl leading-none">Lumpia Special</p>
-                  <p className="font-sans text-[10px] text-[#4A4A4A] mt-0.5">Homemade · Fresh Daily</p>
+                  <p className="text-[10px] text-[#6B6B5C] mt-0.5">Homemade · Fresh Daily</p>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Bottom row: 2 smaller images */}
               <div className="grid grid-cols-2 gap-3 mt-3">
                 {/* Risoles box */}
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.25 }}
-                  className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border-3 border-white"
-                >
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border-3 border-white">
                   <Image
                     src="/images/risoles-box-real.jpg"
                     alt="Risoles Box Toko Kuweh"
@@ -97,15 +80,10 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D20]/40 via-transparent to-transparent" />
                   <span className="absolute bottom-2 left-2.5 text-white text-[10px] font-bold font-sans drop-shadow">Risoles Mayo</span>
-                </motion.div>
+                </div>
 
                 {/* Pie buah */}
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.35 }}
-                  className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border-3 border-white"
-                >
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border-3 border-white">
                   <Image
                     src="/images/pie-buah-real.jpg"
                     alt="Pie Buah Segar Toko Kuweh"
@@ -116,15 +94,17 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D20]/40 via-transparent to-transparent" />
                   <span className="absolute bottom-2 left-2.5 text-white text-[10px] font-bold font-sans drop-shadow">Pie Buah</span>
-                </motion.div>
+                </div>
               </div>
 
               {/* ── Floating Badge: Snack Box price ── */}
-              <motion.div
+              <motion.button
+                type="button"
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-                onClick={onOpenSnackBoxBuilder}
-                className="cursor-pointer absolute -top-4 -right-3 sm:-right-5 bg-[#0B3D20] rounded-2xl px-3.5 py-3 shadow-2xl border-2 border-[#C8A96E]/50 flex items-center gap-2.5 z-20 hover:scale-105 transition-transform"
+                onClick={handleOpenSnackBox}
+                aria-label="Pesan Snack Box mulai Rp 10.000"
+                className="cursor-pointer absolute -top-4 -right-3 sm:-right-5 bg-[#0B3D20] rounded-2xl px-3.5 py-3 shadow-2xl border-2 border-[#C8A96E]/50 flex items-center gap-2.5 z-20 hover:scale-105 transition-transform text-left"
               >
                 <div className="w-9 h-9 rounded-xl bg-[#C8A96E]/20 border border-[#C8A96E]/50 flex items-center justify-center text-lg">
                   🍱
@@ -133,7 +113,7 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                   <span className="text-[9px] uppercase tracking-wider font-semibold text-[#C8A96E] block leading-none">Best Seller</span>
                   <span className="font-['Playfair_Display',serif] text-sm font-bold text-white leading-none block mt-0.5">Snack Box 10rb</span>
                 </div>
-              </motion.div>
+              </motion.button>
 
               {/* ── Floating Badge: Rating ── */}
               <motion.div
@@ -142,39 +122,26 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                 className="absolute -bottom-2 -left-3 sm:-left-5 bg-white rounded-2xl px-3.5 py-2.5 shadow-xl border border-[#E8E4DC] flex items-center gap-2.5 z-20"
               >
                 <div className="w-9 h-9 rounded-xl bg-[#0B3D20] text-[#C8A96E] flex items-center justify-center">
-                  <ShieldCheck className="w-4.5 h-4.5" style={{ width: '18px', height: '18px' }} />
+                  <ShieldCheck className="w-[18px] h-[18px]" />
                 </div>
                 <div>
                   <p className="text-xs font-bold text-[#0B3D20] leading-none">Bahan Alami 100%</p>
-                  <p className="text-[10px] text-[#8A8A7A] mt-0.5 leading-none">Tanpa Pengawet Buatan</p>
+                  <p className="text-[10px] text-[#6B6B5C] mt-0.5 leading-none">Tanpa Pengawet Buatan</p>
                 </div>
               </motion.div>
 
             </div>
-          </motion.div>
+          </div>
 
           {/* ── Right: Text Content ── */}
-          <motion.div
-            initial="initial"
-            animate="animate"
-            transition={{ staggerChildren: 0.1 }}
-            className="order-1 lg:order-2 text-center lg:text-left"
-          >
+          <div className="order-1 lg:order-2 text-center lg:text-left">
             {/* Script subtitle */}
-            <motion.span
-              variants={fadeUp}
-              transition={{ duration: 0.6 }}
-              className="font-['Great_Vibes',cursive] text-[#1E673C] text-4xl sm:text-5xl block mb-1"
-            >
+            <span className="font-['Great_Vibes',cursive] text-[#1E673C] text-4xl sm:text-5xl block mb-1">
               Paket Spesial
-            </motion.span>
+            </span>
 
             {/* Main title + price badge */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              className="relative inline-block mb-4"
-            >
+            <div className="relative inline-block mb-4">
               <h1 className="font-['Playfair_Display',serif] text-6xl sm:text-7xl lg:text-8xl font-black text-[#0B3D20] leading-none tracking-tight">
                 Snack Box
                 <span className="sr-only"> - Toko Kue Cikarang Selatan, Bekasi</span>
@@ -185,39 +152,27 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                 <span className="text-lg font-black leading-none font-['Playfair_Display',serif]">10rb</span>
                 <span className="text-[8px] opacity-50 line-through leading-none font-sans">15rb</span>
               </div>
-            </motion.div>
+            </div>
 
             {/* Stars */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="flex items-center gap-2 mb-5 justify-center lg:justify-start"
-            >
+            <div className="flex items-center gap-2 mb-5 justify-center lg:justify-start">
               {[1, 2, 3, 4, 5].map((i) => (
                 <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
               ))}
               <span className="font-bold text-[#0B3D20] text-sm ml-1">4.9</span>
-              <span className="text-[#8A8A7A] text-xs">500+ Ulasan</span>
-            </motion.div>
+              <span className="text-[#6B6B5C] text-xs">500+ Ulasan</span>
+            </div>
 
             {/* Description box */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="bg-white rounded-2xl p-5 shadow-sm border border-[#E8E4DC] mb-6 text-left"
-            >
+            <div className="bg-white rounded-2xl p-5 shadow-sm border border-[#E8E4DC] mb-6 text-left">
               <p className="text-[#4A4A4A] text-sm leading-relaxed font-sans">
                 Toko kue Cikarang Selatan dengan kue basah tradisional dan modern berkualitas untuk setiap momen istimewa Anda. Dibuat{' '}
                 <strong className="text-[#0B3D20]">fresh setiap hari</strong> dengan bahan alami pilihan — tanpa pengawet. Melayani kantor di kawasan industri Cikarang, arisan, syukuran, dan hampers.
               </p>
-            </motion.div>
+            </div>
 
             {/* Mini feature pills */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.18 }}
-              className="flex flex-wrap gap-2 mb-6 justify-center lg:justify-start"
-            >
+            <div className="flex flex-wrap gap-2 mb-6 justify-center lg:justify-start">
               {[
                 { icon: '✅', text: 'Bahan Alami' },
                 { icon: '🕐', text: 'Fresh Harian' },
@@ -229,14 +184,10 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                   {text}
                 </span>
               ))}
-            </motion.div>
+            </div>
 
             {/* CTA Buttons */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.22 }}
-              className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
-            >
+            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
               <a
                 href={waLink}
                 target="_blank"
@@ -253,8 +204,8 @@ export default function Hero({ onOpenSnackBoxBuilder }: HeroProps) {
                 LIHAT MENU
                 <ChevronRight className="w-4 h-4" />
               </a>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
         </div>
       </div>

@@ -240,6 +240,9 @@ Mohon informasi ketersediaan slot, harga, dan instruksi pembayaran. Terima kasih
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 260 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Form custom Nasi Box Toko Kuweh"
             className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden z-10 my-6 max-h-[90vh] flex flex-col"
           >
             {/* Modal Header */}

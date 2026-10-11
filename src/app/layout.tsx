@@ -5,20 +5,20 @@ import { getStructuredData } from "@/utils/seo";
 import "./globals.css";
 
 const playfair = Playfair_Display({
-  variable: "--font-heading",
+  variable: "--font-playfair",
   subsets: ["latin"],
   display: "swap",
 });
 
 const greatVibes = Great_Vibes({
   weight: "400",
-  variable: "--font-script",
+  variable: "--font-great-vibes",
   subsets: ["latin"],
   display: "swap",
 });
 
 const inter = Inter({
-  variable: "--font-body",
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -36,6 +36,17 @@ export const metadata: Metadata = {
   creator: SITE.name,
   publisher: SITE.name,
   category: SITE.category,
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: SITE.name,
+  },
+  // Meta geografis (didukung mesin pencari seperti Yahoo/Bing) untuk SEO lokal.
+  other: {
+    "geo.region": "ID-JB",
+    "geo.placename": `${SITE.address.district}, ${SITE.address.city}, ${SITE.address.region}, Indonesia`,
+    ICBM: `${SITE.geo.latitude}, ${SITE.geo.longitude}`,
+  },
   alternates: {
     canonical: "/",
   },
@@ -91,6 +102,12 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${playfair.variable} ${greatVibes.variable} ${inter.variable} scroll-smooth`}>
       <body className="antialiased min-h-screen flex flex-col bg-[#FDFBF7] text-[#4A4A4A]">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-lg focus:bg-[#0B3D20] focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg"
+        >
+          Lewati ke konten utama
+        </a>
         {children}
         <script
           type="application/ld+json"

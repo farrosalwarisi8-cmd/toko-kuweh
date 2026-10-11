@@ -1,6 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import { Truck, MessageCircle, Clock, MapPin } from 'lucide-react';
 import { SITE } from '@/data/site';
 import { getWhatsAppLink } from '@/utils/whatsapp';
@@ -53,13 +50,9 @@ export default function ServiceArea() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* Highlights (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
-            {HIGHLIGHTS.map((item, idx) => (
-              <motion.div
+            {HIGHLIGHTS.map((item) => (
+              <div
                 key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
                 className="flex items-start gap-4 bg-[#FDFBF7] border border-[#E8E4DC] rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="w-11 h-11 rounded-xl bg-[#1E673C]/10 text-[#1E673C] flex items-center justify-center shrink-0">
@@ -73,18 +66,12 @@ export default function ServiceArea() {
                     {item.desc}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
 
           {/* Service area card (5 cols) */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="lg:col-span-5 bg-gradient-to-br from-[#0B3D20] to-[#134E2C] rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-[#C8A96E]/30"
-          >
+          <div className="lg:col-span-5 bg-gradient-to-br from-[#0B3D20] to-[#134E2C] rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-[#C8A96E]/30">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-[#C8A96E]/20 border border-[#C8A96E]/40 text-[#C8A96E] flex items-center justify-center">
                 <MapPin className="w-5 h-5" />
@@ -124,7 +111,7 @@ export default function ServiceArea() {
               <MessageCircle className="w-4 h-4" />
               Tanya Stok &amp; Ongkir
             </a>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

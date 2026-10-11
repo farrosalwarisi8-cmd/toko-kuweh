@@ -1,7 +1,4 @@
-'use client';
-
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { Leaf, Clock, Heart, Award } from 'lucide-react';
 
 export default function About() {
@@ -49,13 +46,7 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
           {/* Image Column (5 cols on lg) */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.7 }}
-            className="lg:col-span-5 relative"
-          >
+          <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
               {/* Outer decorative gold ring offset */}
               <div className="absolute -inset-3 rounded-3xl border-2 border-[#C8A96E]/40 transform -rotate-2" />
@@ -78,20 +69,14 @@ export default function About() {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-[#0B3D20]">Tahun Pengalaman</p>
-                  <p className="text-[11px] text-[#8A8A7A]">Membuat Kue Lezat</p>
+                  <p className="text-[11px] text-[#6B6B5C]">Membuat Kue Lezat</p>
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Text & Features Column (7 cols on lg) */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="lg:col-span-7 flex flex-col justify-center"
-          >
+          <div className="lg:col-span-7 flex flex-col justify-center">
             <div className="space-y-4 text-sm sm:text-base text-[#4A4A4A] leading-relaxed mb-8">
               <p>
                 <strong className="text-[#0B3D20] font-semibold">Toko Kuweh</strong> adalah toko kue rumahan yang berbasis di{' '}
@@ -113,29 +98,25 @@ export default function About() {
 
             {/* Feature Cards Grid (2x2) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {features.map((feature, idx) => (
-                <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="bg-white p-4 sm:p-5 rounded-2xl border border-[#E8E4DC] shadow-sm hover:shadow-md transition-shadow"
-                >
+              {features.map((feature) => (
+              <div
+                key={feature.title}
+                className="bg-white p-4 sm:p-5 rounded-2xl border border-[#E8E4DC] shadow-sm hover:shadow-md transition-shadow"
+              >
                   <div className="w-10 h-10 rounded-xl bg-[#1E673C]/10 flex items-center justify-center mb-3">
                     {feature.icon}
                   </div>
                   <h3 className="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#0B3D20] mb-1">
                     {feature.title}
                   </h3>
-                  <p className="text-xs text-[#8A8A7A] leading-relaxed">
+                  <p className="text-xs text-[#6B6B5C] leading-relaxed">
                     {feature.desc}
                   </p>
-                </motion.div>
+                </div>
               ))}
             </div>
 
-          </motion.div>
+          </div>
 
         </div>
       </div>

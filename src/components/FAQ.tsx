@@ -46,8 +46,9 @@ export default function FAQ() {
                 <button
                   type="button"
                   onClick={() => toggleAccordion(faq.id)}
-                  className="w-full flex items-center justify-between p-4 sm:p-5 text-left focus:outline-none"
+                  className="w-full flex items-center justify-between p-4 sm:p-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C8A96E] rounded-2xl"
                   aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${faq.id}`}
                 >
                   <span className="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#0B3D20] pr-4 leading-snug">
                     {faq.question}
@@ -64,12 +65,17 @@ export default function FAQ() {
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
-                      initial={{ height: 0, opacity: 0 }}
+                      initial={false}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: 'easeInOut' }}
                     >
-                      <div className="px-4 pb-5 sm:px-5 sm:pb-5 pt-1 text-xs sm:text-sm text-[#4A4A4A] leading-relaxed border-t border-gray-100">
+                      <div
+                        id={`faq-panel-${faq.id}`}
+                        role="region"
+                        aria-label={`Jawaban: ${faq.question}`}
+                        className="px-4 pb-5 sm:px-5 sm:pb-5 pt-1 text-xs sm:text-sm text-[#4A4A4A] leading-relaxed border-t border-gray-100"
+                      >
                         {faq.answer}
                       </div>
                     </motion.div>

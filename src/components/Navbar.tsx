@@ -6,11 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Menu, X, Phone, MessageCircle, ShoppingBag, UtensilsCrossed } from 'lucide-react';
 import { getWhatsAppLink } from '@/utils/whatsapp';
-
-interface NavbarProps {
-  onOpenSnackBoxBuilder?: () => void;
-  onOpenNasiBoxBuilder?: () => void;
-}
+import { useModal } from '@/components/ModalProvider';
 
 const NAV_LINKS = [
   { label: 'Beranda', href: '#beranda' },
@@ -22,9 +18,10 @@ const NAV_LINKS = [
   { label: 'FAQ', href: '#faq' },
 ];
 
-export default function Navbar({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }: NavbarProps) {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { openSnackBox, openNasiBox } = useModal();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -62,7 +59,7 @@ export default function Navbar({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }: 
                 <span className="font-['Playfair_Display',serif] text-lg font-bold text-[#0B3D20] group-hover:text-[#1E673C] transition-colors">
                   Toko Kuweh
                 </span>
-                <span className="text-[9px] tracking-widest uppercase text-[#8A8A7A] font-sans mt-0.5">
+                <span className="text-[9px] tracking-widest uppercase text-[#6B6B5C] font-sans mt-0.5">
                   Taste of Cikarang
                 </span>
               </div>
@@ -177,24 +174,20 @@ export default function Navbar({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }: 
 
               {/* Drawer Footer */}
               <div className="p-4 border-t border-gray-100 space-y-2.5">
-                {onOpenNasiBoxBuilder && (
-                  <button
-                    onClick={() => { setIsOpen(false); onOpenNasiBoxBuilder(); }}
-                    className="w-full flex items-center justify-center gap-2 bg-[#0B3D20] text-white py-3 rounded-xl font-semibold text-sm transition-colors hover:bg-[#134E2C]"
-                  >
-                    <UtensilsCrossed className="w-4 h-4" />
-                    Custom Nasi Box
-                  </button>
-                )}
-                {onOpenSnackBoxBuilder && (
-                  <button
-                    onClick={() => { setIsOpen(false); onOpenSnackBoxBuilder(); }}
-                    className="w-full flex items-center justify-center gap-2 border-2 border-[#C8A96E] text-[#0B3D20] py-3 rounded-xl font-semibold text-sm transition-colors hover:bg-[#FFF8EE]"
-                  >
-                    <ShoppingBag className="w-4 h-4" />
-                    Custom Snack Box (10rb)
-                  </button>
-                )}
+                <button
+                  onClick={() => { setIsOpen(false); openNasiBox(); }}
+                  className="w-full flex items-center justify-center gap-2 bg-[#0B3D20] text-white py-3 rounded-xl font-semibold text-sm transition-colors hover:bg-[#134E2C]"
+                >
+                  <UtensilsCrossed className="w-4 h-4" />
+                  Custom Nasi Box
+                </button>
+                <button
+                  onClick={() => { setIsOpen(false); openSnackBox(); }}
+                  className="w-full flex items-center justify-center gap-2 border-2 border-[#C8A96E] text-[#0B3D20] py-3 rounded-xl font-semibold text-sm transition-colors hover:bg-[#FFF8EE]"
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  Custom Snack Box (10rb)
+                </button>
                 <a
                   href={waUrl}
                   target="_blank"
@@ -204,7 +197,7 @@ export default function Navbar({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }: 
                   <MessageCircle className="w-4 h-4" />
                   Pesan via WhatsApp
                 </a>
-                <div className="text-xs text-center text-[#8A8A7A] pt-1">
+                <div className="text-xs text-center text-[#6B6B5C] pt-1">
                   Vila Mutiara Cikarang 2, Bekasi
                 </div>
               </div>

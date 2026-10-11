@@ -6,15 +6,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight, Box, Sparkles, UtensilsCrossed } from 'lucide-react';
 import { CATEGORIES, PRODUCTS, Product } from '@/data/products';
 import { getWhatsAppLink } from '@/utils/whatsapp';
+import { useModal } from '@/components/ModalProvider';
 
-interface ProductsProps {
-  onOpenSnackBoxBuilder?: () => void;
-  onOpenNasiBoxBuilder?: () => void;
-}
-
-export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }: ProductsProps) {
+export default function Products() {
   const [activeCategory, setActiveCategory] = useState<string>('semua');
   const [currentIdx, setCurrentIdx] = useState(0);
+  const { openSnackBox, openNasiBox } = useModal();
 
   // 1 produk = 1 slide. Tidak ada produk yang muncul dua kali.
   const filtered = activeCategory === 'semua' ? PRODUCTS : PRODUCTS.filter((p) => p.category === activeCategory);
@@ -34,7 +31,7 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
 
   const handleOrder = (product: Product) => {
     if (product.category === 'nasi-box') {
-      onOpenNasiBoxBuilder?.();
+      openNasiBox();
       return;
     }
     const msg = `Halo Toko Kuweh Cikarang, saya ingin memesan:\n🍰 *Produk:* ${product.name}\n\nBolehkah saya tahu ketersediaan dan minimal pemesanan? Terima kasih.`;
@@ -96,7 +93,7 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
           </div>
           <button
             type="button"
-            onClick={onOpenNasiBoxBuilder}
+            onClick={openNasiBox}
             className="flex-shrink-0 inline-flex items-center gap-2 bg-[#0B3D20] hover:bg-[#134E2C] text-white font-bold text-sm px-7 py-3.5 rounded-full shadow-lg transition-all active:scale-95 font-sans"
           >
             <UtensilsCrossed className="w-4 h-4" />
@@ -131,7 +128,7 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
           </div>
           <button
             type="button"
-            onClick={onOpenSnackBoxBuilder}
+            onClick={openSnackBox}
             className="flex-shrink-0 inline-flex items-center gap-2 bg-[#0B3D20] hover:bg-[#134E2C] text-white font-bold text-sm px-7 py-3.5 rounded-full shadow-lg transition-all active:scale-95 font-sans"
           >
             <Box className="w-4 h-4" />
@@ -162,7 +159,7 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
         {/* ── Carousel: 1 produk per slide ── */}
         <div className="relative mt-10 sm:mt-0">
           {!product && (
-            <div className="text-center py-12 text-[#8A8A7A]">
+            <div className="text-center py-12 text-[#6B6B5C]">
               <p>Belum ada produk di kategori ini.</p>
             </div>
           )}
@@ -183,8 +180,8 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeCategory + '-' + product.id}
-                    initial={{ opacity: 0, x: 32 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ x: 32 }}
+                    animate={{ x: 0 }}
                     exit={{ opacity: 0, x: -32 }}
                     transition={{ duration: 0.28 }}
                     className="max-w-md mx-auto"
@@ -261,9 +258,9 @@ export default function Products({ onOpenSnackBoxBuilder, onOpenNasiBoxBuilder }
         {/* Carousel dots + counter */}
         {filtered.length > 1 && (
           <div className="mt-10 flex flex-col items-center gap-4">
-            <p className="text-xs font-semibold text-[#8A8A7A] font-sans tracking-wide">
-              Produk {currentIdx + 1} dari {filtered.length}
-            </p>
+              <p className="text-xs font-semibold text-[#6B6B5C] font-sans tracking-wide">
+                Produk {currentIdx + 1} dari {filtered.length}
+              </p>
             <div className="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto">
               {filtered.map((p, idx) => (
                 <button

@@ -1,8 +1,5 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { MapPin, Phone, Clock, MessageCircle, Heart } from 'lucide-react';
 import { WA_NUMBERS, getWhatsAppLink } from '@/utils/whatsapp';
 
@@ -71,7 +68,7 @@ export default function Footer() {
               </div>
               <div>
                 <span className="font-['Playfair_Display',serif] text-xl font-bold text-[#0B3D20] block leading-none">Toko Kuweh</span>
-                <span className="text-[9px] tracking-widest uppercase text-[#8A8A7A] font-sans block mt-1">Taste of Cikarang</span>
+                <span className="text-[9px] tracking-widest uppercase text-[#6B6B5C] font-sans block mt-1">Taste of Cikarang</span>
               </div>
             </div>
 
@@ -79,7 +76,7 @@ export default function Footer() {
               Toko kue di Cikarang Selatan, Bekasi yang menghadirkan aneka kue basah tradisional, jajanan gurih, bolu, nasi box, dan paket snack box berkualitas.
             </p>
 
-            <p className="text-xs text-[#8A8A7A] italic font-sans">
+            <p className="text-xs text-[#6B6B5C] italic font-sans">
               &ldquo;Dibuat dengan perhatian, disajikan dengan kualitas.&rdquo;
             </p>
 
@@ -169,7 +166,7 @@ export default function Footer() {
         </div>
 
         {/* ── Bottom Bar ── */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#8A8A7A] font-sans">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#6B6B5C] font-sans">
           <p>© {new Date().getFullYear()} Toko Kuweh Cikarang Selatan. Seluruh hak cipta dilindungi.</p>
           <p className="flex items-center gap-1.5">
             Dibuat dengan <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400" /> untuk momen istimewa Anda
@@ -187,17 +184,15 @@ export default function Footer() {
         {/* Ping */}
         <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#C8A96E] rounded-full animate-ping opacity-75 pointer-events-none" />
 
-        <motion.a
+        <a
           href={getWhatsAppLink('Halo, saya ingin bertanya dan memesan di Toko Kuweh.')}
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.93 }}
           aria-label="Chat WhatsApp Toko Kuweh"
-          className="w-14 h-14 rounded-full bg-[#0B3D20] hover:bg-[#134E2C] text-white flex items-center justify-center shadow-2xl border-2 border-[#C8A96E] transition-colors"
+          className="w-14 h-14 rounded-full bg-[#0B3D20] hover:bg-[#134E2C] text-white flex items-center justify-center shadow-2xl border-2 border-[#C8A96E] transition-all duration-200 hover:scale-105 active:scale-95"
         >
           <MessageCircle className="w-7 h-7 fill-white text-[#0B3D20]" />
-        </motion.a>
+        </a>
       </div>
     </footer>
   );
